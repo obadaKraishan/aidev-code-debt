@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23627054.svg)](https://doi.org/10.5281/zenodo.23627054)
+
 # Not All Agents Are Equal
 
 ### Code Quality and Post-Merge Maintenance Across Five Autonomous Coding Agents in the Wild
