@@ -43,7 +43,7 @@ No credentials are needed for this path. It re-runs validation, the codebook,
 and all five analyses on `data/processed/master.csv`.
 
 ```bash
-git clone <this-repo> && cd aidev-code-debt
+git clone https://github.com/obadaKraishan/aidev-code-debt.git && cd aidev-code-debt
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python run_all.py --analysis-only
