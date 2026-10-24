@@ -1,0 +1,15 @@
+{
+  "generated_at_utc": "2026-08-11T14:05:17.449943+00:00",
+  "n_human_prs": 4027,
+  "n_repos": 810,
+  "repo_overlap_with_agents": 810,
+  "agent_prs_in_matched_repos": 9750,
+  "time_window": [
+    "2024-12-24 00:23:09+00:00",
+    "2025-07-30 19:36:13+00:00"
+  ],
+  "merged_rate_human": 0.7638,
+  "merged_rate_agent": 0.7148,
+  "per_repo_cap": 20,
+  "seed": 42
+}

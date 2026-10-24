@@ -1,0 +1,19 @@
+============================================================================
+ MASTER TABLE REPORT
+ Generated: 2026-08-12T13:54:55.010912+00:00
+============================================================================
+ Rows (PRs)    : 37,623
+ Features      : 64
+----------------------------------------------------------------------------
+ Group                 PRs  Sec.dens(med)  Churn(med)  Revert%  RevLat.h(med)
+ OpenAI Codex       21,799          0.000         3.0     5.0%            2.3
+ Devin               4,827          0.000         3.0     6.5%            1.0
+ GitHub Copilot      4,970          0.000         2.0     5.3%            1.4
+ Cursor              1,541          0.000         3.0     7.0%            3.6
+ Claude Code           459          0.000         2.0     6.1%           12.6
+ Human               4,027          0.000         3.0     8.6%            nan
+----------------------------------------------------------------------------
+ NOTE: review-dynamics coverage differs by group (AIDev review
+ tables cover agentic PRs); RQ5 reports coverage explicitly and
+ compares within covered strata.
+============================================================================

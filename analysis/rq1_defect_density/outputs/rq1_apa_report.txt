@@ -1,0 +1,255 @@
+==============================================================================
+ RQ1 — Defect / Issue Density: Agent vs Human PRs
+==============================================================================
+ Research question : Do agent-authored PRs carry higher defect/issue density than human PRs, and by how much?
+ Generated (UTC)   : 2026-10-24 14:18:17
+ Alpha             : 0.05   |   CI: 95%   |   p-adjustment: Benjamini-Hochberg
+ Bootstrap draws   : 5,000 (seed 42)
+==============================================================================
+
+ Analysis population: 8,933 PRs with target-language diffs (static_status='ok') out of 37,623 total.
+ Coverage by group is reported in validation_report.txt and acknowledged as a threat to validity.
+
+------------------------------------------------------------------------------
+ Descriptive statistics — security_smell_density
+------------------------------------------------------------------------------
+ Group                  n       Mean         SD     Median        Q1        Q3
+ -----------------------------------------------------------------------------
+ OpenAI Codex       4,570      0.073      1.089      0.000     0.000     0.000
+ Devin              1,224      0.162      3.016      0.000     0.000     0.000
+ GitHub Copilot     1,102      0.042      0.550      0.000     0.000     0.000
+ Cursor               571      0.015      0.201      0.000     0.000     0.000
+ Claude Code          241      0.028      0.140      0.000     0.000     0.000
+ Human              1,225      0.038      0.378      0.000     0.000     0.000
+
+------------------------------------------------------------------------------
+ Omnibus test — security_smell_density across 6 groups
+------------------------------------------------------------------------------
+ Test          : Kruskal-Wallis H
+ Groups (k)    : 6  (OpenAI Codex, Devin, GitHub Copilot, Cursor, Claude Code, Human)
+ Total n       : 8,933
+ Statistic     : H(5) = 52.48
+ p             : p < .001
+ Effect size   : epsilon-squared = 0.0053
+ 
+ READY-TO-PASTE (IEEE prose):
+ "A Kruskal-Wallis test indicated a significant difference in security_smell_density across the 6 author groups (H(5) = 52.48, p < .001, epsilon-squared = 0.005)."
+
+------------------------------------------------------------------------------
+ Inferential test — security_smell_density: OpenAI Codex vs Human
+------------------------------------------------------------------------------
+ Test          : Mann-Whitney U (two-sided)
+ Sample sizes  : n(OpenAI Codex) = 4,570, n(Human) = 1,225
+ Statistic     : U = 2,743,431.0
+ p (raw)       : p < .001
+ p (BH-adj.)   : p = .001
+ Effect size   : Cliff's delta = -0.020, 95% CI [-0.033, -0.008] (negligible)
+ Rank-biserial : r = -0.020
+ 
+ READY-TO-PASTE (IEEE prose):
+ "OpenAI Codex PRs showed lower security_smell_density than Human PRs (Mann-Whitney U = 2,743,431.0, BH-adjusted p = .001, Cliff's delta = -0.02, 95% CI [-0.033, -0.008]), a negligible effect."
+
+------------------------------------------------------------------------------
+ Inferential test — security_smell_density: Devin vs Human
+------------------------------------------------------------------------------
+ Test          : Mann-Whitney U (two-sided)
+ Sample sizes  : n(Devin) = 1,224, n(Human) = 1,225
+ Statistic     : U = 746,423.0
+ p (raw)       : p = .595
+ p (BH-adj.)   : p = .595
+ Effect size   : Cliff's delta = -0.004, 95% CI [-0.020, 0.012] (negligible)
+ Rank-biserial : r = -0.004
+ 
+ READY-TO-PASTE (IEEE prose):
+ "Devin PRs showed lower security_smell_density than Human PRs (Mann-Whitney U = 746,423.0, BH-adjusted p = .595, Cliff's delta = -0.00, 95% CI [-0.020, 0.012]), a negligible effect."
+
+------------------------------------------------------------------------------
+ Inferential test — security_smell_density: GitHub Copilot vs Human
+------------------------------------------------------------------------------
+ Test          : Mann-Whitney U (two-sided)
+ Sample sizes  : n(GitHub Copilot) = 1,102, n(Human) = 1,225
+ Statistic     : U = 662,647.5
+ p (raw)       : p = .020
+ p (BH-adj.)   : p = .025
+ Effect size   : Cliff's delta = -0.018, 95% CI [-0.034, -0.003] (negligible)
+ Rank-biserial : r = -0.018
+ 
+ READY-TO-PASTE (IEEE prose):
+ "GitHub Copilot PRs showed lower security_smell_density than Human PRs (Mann-Whitney U = 662,647.5, BH-adjusted p = .025, Cliff's delta = -0.02, 95% CI [-0.034, -0.003]), a negligible effect."
+
+------------------------------------------------------------------------------
+ Inferential test — security_smell_density: Cursor vs Human
+------------------------------------------------------------------------------
+ Test          : Mann-Whitney U (two-sided)
+ Sample sizes  : n(Cursor) = 571, n(Human) = 1,225
+ Statistic     : U = 339,291.0
+ p (raw)       : p = .002
+ p (BH-adj.)   : p = .004
+ Effect size   : Cliff's delta = -0.030, 95% CI [-0.046, -0.014] (negligible)
+ Rank-biserial : r = -0.030
+ 
+ READY-TO-PASTE (IEEE prose):
+ "Cursor PRs showed lower security_smell_density than Human PRs (Mann-Whitney U = 339,291.0, BH-adjusted p = .004, Cliff's delta = -0.03, 95% CI [-0.046, -0.014]), a negligible effect."
+
+------------------------------------------------------------------------------
+ Inferential test — security_smell_density: Claude Code vs Human
+------------------------------------------------------------------------------
+ Test          : Mann-Whitney U (two-sided)
+ Sample sizes  : n(Claude Code) = 241, n(Human) = 1,225
+ Statistic     : U = 154,761.5
+ p (raw)       : p = .002
+ p (BH-adj.)   : p = .004
+ Effect size   : Cliff's delta = 0.048, 95% CI [0.011, 0.089] (negligible)
+ Rank-biserial : r = 0.048
+ 
+ READY-TO-PASTE (IEEE prose):
+ "Claude Code PRs showed higher security_smell_density than Human PRs (Mann-Whitney U = 154,761.5, BH-adjusted p = .004, Cliff's delta = 0.05, 95% CI [0.011, 0.089]), a negligible effect."
+
+------------------------------------------------------------------------------
+ Descriptive statistics — maintainability_smell_density
+------------------------------------------------------------------------------
+ Group                  n       Mean         SD     Median        Q1        Q3
+ -----------------------------------------------------------------------------
+ OpenAI Codex       4,570      0.977      6.359      0.000     0.000     0.000
+ Devin              1,224      1.980      9.856      0.000     0.000     0.184
+ GitHub Copilot     1,102      3.531     14.266      0.000     0.000     0.963
+ Cursor               571      1.663      7.637      0.000     0.000     0.412
+ Claude Code          241      0.688      2.292      0.000     0.000     0.511
+ Human              1,225      2.473     11.256      0.000     0.000     0.671
+
+------------------------------------------------------------------------------
+ Omnibus test — maintainability_smell_density across 6 groups
+------------------------------------------------------------------------------
+ Test          : Kruskal-Wallis H
+ Groups (k)    : 6  (OpenAI Codex, Devin, GitHub Copilot, Cursor, Claude Code, Human)
+ Total n       : 8,933
+ Statistic     : H(5) = 467.65
+ p             : p < .001
+ Effect size   : epsilon-squared = 0.0518
+ 
+ READY-TO-PASTE (IEEE prose):
+ "A Kruskal-Wallis test indicated a significant difference in maintainability_smell_density across the 6 author groups (H(5) = 467.65, p < .001, epsilon-squared = 0.052)."
+
+------------------------------------------------------------------------------
+ Inferential test — maintainability_smell_density: OpenAI Codex vs Human
+------------------------------------------------------------------------------
+ Test          : Mann-Whitney U (two-sided)
+ Sample sizes  : n(OpenAI Codex) = 4,570, n(Human) = 1,225
+ Statistic     : U = 2,255,183.0
+ p (raw)       : p < .001
+ p (BH-adj.)   : p < .001
+ Effect size   : Cliff's delta = -0.194, 95% CI [-0.222, -0.166] (small)
+ Rank-biserial : r = -0.194
+ 
+ READY-TO-PASTE (IEEE prose):
+ "OpenAI Codex PRs showed lower maintainability_smell_density than Human PRs (Mann-Whitney U = 2,255,183.0, BH-adjusted p < .001, Cliff's delta = -0.19, 95% CI [-0.222, -0.166]), a small effect."
+
+------------------------------------------------------------------------------
+ Inferential test — maintainability_smell_density: Devin vs Human
+------------------------------------------------------------------------------
+ Test          : Mann-Whitney U (two-sided)
+ Sample sizes  : n(Devin) = 1,224, n(Human) = 1,225
+ Statistic     : U = 698,261.5
+ p (raw)       : p < .001
+ p (BH-adj.)   : p < .001
+ Effect size   : Cliff's delta = -0.069, 95% CI [-0.104, -0.031] (negligible)
+ Rank-biserial : r = -0.069
+ 
+ READY-TO-PASTE (IEEE prose):
+ "Devin PRs showed lower maintainability_smell_density than Human PRs (Mann-Whitney U = 698,261.5, BH-adjusted p < .001, Cliff's delta = -0.07, 95% CI [-0.104, -0.031]), a negligible effect."
+
+------------------------------------------------------------------------------
+ Inferential test — maintainability_smell_density: GitHub Copilot vs Human
+------------------------------------------------------------------------------
+ Test          : Mann-Whitney U (two-sided)
+ Sample sizes  : n(GitHub Copilot) = 1,102, n(Human) = 1,225
+ Statistic     : U = 697,348.0
+ p (raw)       : p = .103
+ p (BH-adj.)   : p = .171
+ Effect size   : Cliff's delta = 0.033, 95% CI [-0.006, 0.073] (negligible)
+ Rank-biserial : r = 0.033
+ 
+ READY-TO-PASTE (IEEE prose):
+ "GitHub Copilot PRs showed higher maintainability_smell_density than Human PRs (Mann-Whitney U = 697,348.0, BH-adjusted p = .171, Cliff's delta = 0.03, 95% CI [-0.006, 0.073]), a negligible effect."
+
+------------------------------------------------------------------------------
+ Inferential test — maintainability_smell_density: Cursor vs Human
+------------------------------------------------------------------------------
+ Test          : Mann-Whitney U (two-sided)
+ Sample sizes  : n(Cursor) = 571, n(Human) = 1,225
+ Statistic     : U = 339,772.0
+ p (raw)       : p = .242
+ p (BH-adj.)   : p = .242
+ Effect size   : Cliff's delta = -0.028, 95% CI [-0.074, 0.019] (negligible)
+ Rank-biserial : r = -0.028
+ 
+ READY-TO-PASTE (IEEE prose):
+ "Cursor PRs showed lower maintainability_smell_density than Human PRs (Mann-Whitney U = 339,772.0, BH-adjusted p = .242, Cliff's delta = -0.03, 95% CI [-0.074, 0.019]), a negligible effect."
+
+------------------------------------------------------------------------------
+ Inferential test — maintainability_smell_density: Claude Code vs Human
+------------------------------------------------------------------------------
+ Test          : Mann-Whitney U (two-sided)
+ Sample sizes  : n(Claude Code) = 241, n(Human) = 1,225
+ Statistic     : U = 155,205.0
+ p (raw)       : p = .139
+ p (BH-adj.)   : p = .173
+ Effect size   : Cliff's delta = 0.051, 95% CI [-0.011, 0.116] (negligible)
+ Rank-biserial : r = 0.051
+ 
+ READY-TO-PASTE (IEEE prose):
+ "Claude Code PRs showed higher maintainability_smell_density than Human PRs (Mann-Whitney U = 155,205.0, BH-adjusted p = .173, Cliff's delta = 0.05, 95% CI [-0.011, 0.116]), a negligible effect."
+
+------------------------------------------------------------------------------
+ Categorical test — Presence of >=1 security smell (agent-pooled vs human PRs)
+------------------------------------------------------------------------------
+ Test          : Chi-square
+ n             : 8,933
+ Statistic     : chi2(1) = 8.59
+ p             : p = .003
+ Effect size   : Cramer's V = 0.029
+ Odds ratio    : OR = 0.633, 95% CI [0.470, 0.854]
+ 
+ READY-TO-PASTE (IEEE prose):
+ "Presence of >=1 security smell (agent-pooled vs human PRs) differed significantly (chi2(1) = 8.59, p = .003, Cramer's V = 0.03)."
+
+------------------------------------------------------------------------------
+ Share of analyzed PRs with >=1 security smell
+------------------------------------------------------------------------------
+   author_group share_with_security_smell
+         Cursor                    0.0158
+   OpenAI Codex                    0.0252
+ GitHub Copilot                    0.0272
+          Devin                    0.0408
+          Human                    0.0457
+    Claude Code                    0.0954
+
+------------------------------------------------------------------------------
+ Sensitivity — size-bucket-stratified (security density)
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+ Agent-vs-human delta within PR size buckets
+------------------------------------------------------------------------------
+ bucket  n_agent  n_human   delta      p  p_adj
+     XS     1201      215  0.0017 0.5504 0.6957
+      S     2185      265  0.0031 0.5566 0.6957
+      M     2679      354  0.0063 0.4759 0.6957
+      L     1030      221  0.0018 0.9240 0.9240
+     XL      613      167 -0.0830 0.0050 0.0249
+
+------------------------------------------------------------------------------
+ Assumption checks & test justification
+------------------------------------------------------------------------------
+ Software-engineering metrics (defect counts, churn, latency) are
+ heavy-tailed and zero-inflated; Shapiro-Wilk/D'Agostino normality
+ tests reject at these sample sizes and variances are unequal.
+ Non-parametric rank tests (Mann-Whitney, Kruskal-Wallis) with
+ Cliff's delta effect sizes are therefore used throughout, per
+ standard practice in empirical software engineering. All p-values
+ across families of comparisons are Benjamini-Hochberg adjusted
+ (FDR 0.05). Bootstrap CIs use 5,000 resamples, seed 42.
+
+==============================================================================
+ END OF REPORT
+==============================================================================

@@ -1,0 +1,94 @@
+{
+  "omnibus": [
+    {
+      "metric": "max_nesting",
+      "test": "Kruskal-Wallis H",
+      "k": 6,
+      "n_total": 8933,
+      "H": 118.28101603058418,
+      "df": 5,
+      "p": 7.257097091553887e-24,
+      "epsilon_squared": 0.012689707183889794
+    },
+    {
+      "metric": "branch_density",
+      "test": "Kruskal-Wallis H",
+      "k": 6,
+      "n_total": 8933,
+      "H": 103.98085304331794,
+      "df": 5,
+      "p": 7.648252447567448e-21,
+      "epsilon_squared": 0.011087806994882708
+    },
+    {
+      "metric": "comment_ratio",
+      "test": "Kruskal-Wallis H",
+      "k": 6,
+      "n_total": 8933,
+      "H": 868.5012079828249,
+      "df": 5,
+      "p": 1.7451495770552224e-185,
+      "epsilon_squared": 0.0967291596261706
+    },
+    {
+      "metric": "maintainability_smell_density",
+      "test": "Kruskal-Wallis H",
+      "k": 6,
+      "n_total": 8933,
+      "H": 467.65005476360693,
+      "df": 5,
+      "p": 7.648287402187664e-99,
+      "epsilon_squared": 0.05182592749676341
+    }
+  ],
+  "median_profile": [
+    {
+      "author_group": "Cursor",
+      "max_nesting": 3.0,
+      "branch_density": 0.0393996247654784,
+      "comment_ratio": 0.0416666666666666,
+      "maintainability_smell_density": 0.0,
+      "composite_rank": 3.125
+    },
+    {
+      "author_group": "Devin",
+      "max_nesting": 3.0,
+      "branch_density": 0.0288889507065761,
+      "comment_ratio": 0.0,
+      "maintainability_smell_density": 0.0,
+      "composite_rank": 3.125
+    },
+    {
+      "author_group": "GitHub Copilot",
+      "max_nesting": 3.0,
+      "branch_density": 0.0551181102362204,
+      "comment_ratio": 0.06466547192353639,
+      "maintainability_smell_density": 0.0,
+      "composite_rank": 3.375
+    },
+    {
+      "author_group": "Human",
+      "max_nesting": 3.0,
+      "branch_density": 0.037037037037037,
+      "comment_ratio": 0.0,
+      "maintainability_smell_density": 0.0,
+      "composite_rank": 3.375
+    },
+    {
+      "author_group": "OpenAI Codex",
+      "max_nesting": 3.0,
+      "branch_density": 0.0517241379310344,
+      "comment_ratio": 0.0,
+      "maintainability_smell_density": 0.0,
+      "composite_rank": 3.875
+    },
+    {
+      "author_group": "Claude Code",
+      "max_nesting": 4.0,
+      "branch_density": 0.0634408602150537,
+      "comment_ratio": 0.0762711864406779,
+      "maintainability_smell_density": 0.0,
+      "composite_rank": 4.125
+    }
+  ]
+}

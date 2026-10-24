@@ -1,0 +1,642 @@
+[
+  {
+    "variable": "id",
+    "dtype": "int64",
+    "definition": "PR unique id (GitHub, via AIDev)",
+    "unit": "-",
+    "source_stage": "AIDev",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "3264933329"
+  },
+  {
+    "variable": "number",
+    "dtype": "int64",
+    "definition": "PR number within its repository",
+    "unit": "-",
+    "source_stage": "AIDev",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "2911"
+  },
+  {
+    "variable": "title",
+    "dtype": "str",
+    "definition": "PR title text",
+    "unit": "-",
+    "source_stage": "AIDev",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "Fix: Wait for all partitions in load_col"
+  },
+  {
+    "variable": "agent",
+    "dtype": "str",
+    "definition": "Raw AIDev author label",
+    "unit": "-",
+    "source_stage": "AIDev",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "Claude_Code"
+  },
+  {
+    "variable": "user",
+    "dtype": "str",
+    "definition": "PR author login",
+    "unit": "-",
+    "source_stage": "AIDev",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "weiliu1031"
+  },
+  {
+    "variable": "state",
+    "dtype": "str",
+    "definition": "PR state (open/closed)",
+    "unit": "-",
+    "source_stage": "AIDev",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "closed"
+  },
+  {
+    "variable": "created_at",
+    "dtype": "str",
+    "definition": "PR creation timestamp",
+    "unit": "UTC",
+    "source_stage": "AIDev",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "2025-07-26 02:59:01+00:00"
+  },
+  {
+    "variable": "closed_at",
+    "dtype": "str",
+    "definition": "PR close timestamp",
+    "unit": "UTC",
+    "source_stage": "AIDev",
+    "non_null": 35010,
+    "coverage": 0.9305,
+    "example": "2025-07-29T07:01:20Z"
+  },
+  {
+    "variable": "merged_at",
+    "dtype": "str",
+    "definition": "PR merge timestamp (raw)",
+    "unit": "UTC",
+    "source_stage": "AIDev",
+    "non_null": 27090,
+    "coverage": 0.72,
+    "example": "2025-07-26T22:12:24Z"
+  },
+  {
+    "variable": "html_url",
+    "dtype": "str",
+    "definition": "PR web URL",
+    "unit": "-",
+    "source_stage": "AIDev",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "https://github.com/milvus-io/pymilvus/pu"
+  },
+  {
+    "variable": "author_group",
+    "dtype": "str",
+    "definition": "Canonical author group (5 agents + Human)",
+    "unit": "-",
+    "source_stage": "clean_and_merge",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "Claude Code"
+  },
+  {
+    "variable": "repo",
+    "dtype": "str",
+    "definition": "owner/name parsed from html_url",
+    "unit": "-",
+    "source_stage": "clean_and_merge",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "milvus-io/pymilvus"
+  },
+  {
+    "variable": "merged_at_dt",
+    "dtype": "str",
+    "definition": "Parsed merge timestamp",
+    "unit": "UTC",
+    "source_stage": "clean_and_merge",
+    "non_null": 27090,
+    "coverage": 0.72,
+    "example": "2025-07-26 22:12:24+00:00"
+  },
+  {
+    "variable": "is_merged",
+    "dtype": "int64",
+    "definition": "1 if PR merged",
+    "unit": "0/1",
+    "source_stage": "clean_and_merge",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "0"
+  },
+  {
+    "variable": "enrich_status",
+    "dtype": "str",
+    "definition": "GitHub enrichment outcome (ok/pr_gone/bad_url)",
+    "unit": "-",
+    "source_stage": "enrich_github",
+    "non_null": 28716,
+    "coverage": 0.7633,
+    "example": "ok"
+  },
+  {
+    "variable": "n_files",
+    "dtype": "float64",
+    "definition": "Files changed in PR",
+    "unit": "count",
+    "source_stage": "enrich_github",
+    "non_null": 27846,
+    "coverage": 0.7401,
+    "example": "3.0"
+  },
+  {
+    "variable": "additions",
+    "dtype": "float64",
+    "definition": "Lines added",
+    "unit": "lines",
+    "source_stage": "enrich_github",
+    "non_null": 27846,
+    "coverage": 0.7401,
+    "example": "394.0"
+  },
+  {
+    "variable": "deletions",
+    "dtype": "float64",
+    "definition": "Lines deleted",
+    "unit": "lines",
+    "source_stage": "enrich_github",
+    "non_null": 27846,
+    "coverage": 0.7401,
+    "example": "2.0"
+  },
+  {
+    "variable": "changed_files_list",
+    "dtype": "str",
+    "definition": "First 50 changed file paths",
+    "unit": ";-sep",
+    "source_stage": "enrich_github",
+    "non_null": 27615,
+    "coverage": 0.734,
+    "example": "pymilvus/client/async_grpc_handler.py;py"
+  },
+  {
+    "variable": "languages_touched",
+    "dtype": "str",
+    "definition": "Target languages present in diff",
+    "unit": ";-sep",
+    "source_stage": "enrich_github",
+    "non_null": 9133,
+    "coverage": 0.2428,
+    "example": "Python"
+  },
+  {
+    "variable": "post_merge_commits_90d",
+    "dtype": "float64",
+    "definition": "Commits touching PR's top file in 90d after merge",
+    "unit": "count",
+    "source_stage": "enrich_github",
+    "non_null": 26283,
+    "coverage": 0.6986,
+    "example": "12.0"
+  },
+  {
+    "variable": "post_merge_authors_90d",
+    "dtype": "float64",
+    "definition": "Distinct authors of those commits",
+    "unit": "count",
+    "source_stage": "enrich_github",
+    "non_null": 26283,
+    "coverage": 0.6986,
+    "example": "4.0"
+  },
+  {
+    "variable": "revert_detected",
+    "dtype": "float64",
+    "definition": "1 if revert-style commit found in follow-up window",
+    "unit": "0/1",
+    "source_stage": "enrich_github",
+    "non_null": 26283,
+    "coverage": 0.6986,
+    "example": "0.0"
+  },
+  {
+    "variable": "changed_lines",
+    "dtype": "float64",
+    "definition": "additions + deletions",
+    "unit": "lines",
+    "source_stage": "clean_and_merge",
+    "non_null": 27846,
+    "coverage": 0.7401,
+    "example": "396.0"
+  },
+  {
+    "variable": "static_status",
+    "dtype": "str",
+    "definition": "Patch analysis outcome (ok/no_cache/no_target_lang)",
+    "unit": "-",
+    "source_stage": "static_analysis",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "ok"
+  },
+  {
+    "variable": "added_lines_analyzed",
+    "dtype": "float64",
+    "definition": "Added diff lines in target languages",
+    "unit": "lines",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "394.0"
+  },
+  {
+    "variable": "todo_count",
+    "dtype": "float64",
+    "definition": "TODO/FIXME/HACK/XXX markers in added lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "long_lines",
+    "dtype": "float64",
+    "definition": "Added lines > 120 chars",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "comment_lines",
+    "dtype": "float64",
+    "definition": "Added comment lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "36.0"
+  },
+  {
+    "variable": "comment_ratio",
+    "dtype": "float64",
+    "definition": "comment_lines / added lines",
+    "unit": "0-1",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0913705583756345"
+  },
+  {
+    "variable": "branch_count",
+    "dtype": "float64",
+    "definition": "Branching keywords in added lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "21.0"
+  },
+  {
+    "variable": "branch_density",
+    "dtype": "float64",
+    "definition": "branch_count / added lines",
+    "unit": "per line",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0532994923857868"
+  },
+  {
+    "variable": "max_nesting",
+    "dtype": "float64",
+    "definition": "Max indent depth (4-space units) in added lines",
+    "unit": "levels",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "8.0"
+  },
+  {
+    "variable": "CWE-798_hardcoded_secret",
+    "dtype": "float64",
+    "definition": "Hits of CWE-798_hardcoded_secret pattern in added lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "CWE-89_sql_injection",
+    "dtype": "float64",
+    "definition": "Hits of CWE-89_sql_injection pattern in added lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "CWE-78_cmd_injection",
+    "dtype": "float64",
+    "definition": "Hits of CWE-78_cmd_injection pattern in added lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "CWE-95_eval_injection",
+    "dtype": "float64",
+    "definition": "Hits of CWE-95_eval_injection pattern in added lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "CWE-502_unsafe_deserialization",
+    "dtype": "float64",
+    "definition": "Hits of CWE-502_unsafe_deserialization pattern in added lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "CWE-327_weak_crypto",
+    "dtype": "float64",
+    "definition": "Hits of CWE-327_weak_crypto pattern in added lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "CWE-79_xss",
+    "dtype": "float64",
+    "definition": "Hits of CWE-79_xss pattern in added lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "CWE-22_path_traversal",
+    "dtype": "float64",
+    "definition": "Hits of CWE-22_path_traversal pattern in added lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "security_smells_total",
+    "dtype": "float64",
+    "definition": "Sum over CWE catalog hits",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "maintainability_smells_total",
+    "dtype": "float64",
+    "definition": "todo_count + long_lines",
+    "unit": "count",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "languages_analyzed",
+    "dtype": "str",
+    "definition": "Languages actually analyzed",
+    "unit": ";-sep",
+    "source_stage": "static_analysis",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "Python"
+  },
+  {
+    "variable": "oversize_diff",
+    "dtype": "float64",
+    "definition": "1 if diff exceeded MAX_DIFF_LINES cap",
+    "unit": "0/1",
+    "source_stage": "static_analysis",
+    "non_null": 208,
+    "coverage": 0.0055,
+    "example": "1.0"
+  },
+  {
+    "variable": "size_bucket",
+    "dtype": "str",
+    "definition": "PR size class XS/S/M/L/XL by changed_lines",
+    "unit": "-",
+    "source_stage": "feature_engineering",
+    "non_null": 27846,
+    "coverage": 0.7401,
+    "example": "L"
+  },
+  {
+    "variable": "security_smell_density",
+    "dtype": "float64",
+    "definition": "Security smells per 100 added lines",
+    "unit": "/100 lines",
+    "source_stage": "feature_engineering",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "maintainability_smell_density",
+    "dtype": "float64",
+    "definition": "Maintainability smells per 100 added lines",
+    "unit": "/100 lines",
+    "source_stage": "feature_engineering",
+    "non_null": 8933,
+    "coverage": 0.2374,
+    "example": "0.0"
+  },
+  {
+    "variable": "churn_per_100_lines",
+    "dtype": "float64",
+    "definition": "Post-merge commits per 100 changed lines",
+    "unit": "/100 lines",
+    "source_stage": "feature_engineering",
+    "non_null": 26254,
+    "coverage": 0.6978,
+    "example": "15.789473684210526"
+  },
+  {
+    "variable": "has_CWE-798",
+    "dtype": "int64",
+    "definition": "1 if any CWE-798 hit in PR",
+    "unit": "0/1",
+    "source_stage": "feature_engineering",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "0"
+  },
+  {
+    "variable": "has_CWE-89",
+    "dtype": "int64",
+    "definition": "1 if any CWE-89 hit in PR",
+    "unit": "0/1",
+    "source_stage": "feature_engineering",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "0"
+  },
+  {
+    "variable": "has_CWE-78",
+    "dtype": "int64",
+    "definition": "1 if any CWE-78 hit in PR",
+    "unit": "0/1",
+    "source_stage": "feature_engineering",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "0"
+  },
+  {
+    "variable": "has_CWE-95",
+    "dtype": "int64",
+    "definition": "1 if any CWE-95 hit in PR",
+    "unit": "0/1",
+    "source_stage": "feature_engineering",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "0"
+  },
+  {
+    "variable": "has_CWE-502",
+    "dtype": "int64",
+    "definition": "1 if any CWE-502 hit in PR",
+    "unit": "0/1",
+    "source_stage": "feature_engineering",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "0"
+  },
+  {
+    "variable": "has_CWE-327",
+    "dtype": "int64",
+    "definition": "1 if any CWE-327 hit in PR",
+    "unit": "0/1",
+    "source_stage": "feature_engineering",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "0"
+  },
+  {
+    "variable": "has_CWE-79",
+    "dtype": "int64",
+    "definition": "1 if any CWE-79 hit in PR",
+    "unit": "0/1",
+    "source_stage": "feature_engineering",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "0"
+  },
+  {
+    "variable": "has_CWE-22",
+    "dtype": "int64",
+    "definition": "1 if any CWE-22 hit in PR",
+    "unit": "0/1",
+    "source_stage": "feature_engineering",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "0"
+  },
+  {
+    "variable": "n_bot_reviews",
+    "dtype": "float64",
+    "definition": "Bot reviews on PR",
+    "unit": "count",
+    "source_stage": "feature_engineering",
+    "non_null": 4535,
+    "coverage": 0.1205,
+    "example": "1.0"
+  },
+  {
+    "variable": "n_reviews",
+    "dtype": "float64",
+    "definition": "Human reviews on PR (bots excluded)",
+    "unit": "count",
+    "source_stage": "feature_engineering",
+    "non_null": 6004,
+    "coverage": 0.1596,
+    "example": "1.0"
+  },
+  {
+    "variable": "first_review_at",
+    "dtype": "str",
+    "definition": "First human review timestamp",
+    "unit": "UTC",
+    "source_stage": "feature_engineering",
+    "non_null": 6004,
+    "coverage": 0.1596,
+    "example": "2025-07-26 13:36:02+00:00"
+  },
+  {
+    "variable": "n_change_requests",
+    "dtype": "float64",
+    "definition": "Reviews with CHANGES_REQUESTED",
+    "unit": "count",
+    "source_stage": "feature_engineering",
+    "non_null": 6004,
+    "coverage": 0.1596,
+    "example": "0.0"
+  },
+  {
+    "variable": "review_latency_hours",
+    "dtype": "float64",
+    "definition": "Hours from PR creation to first human review",
+    "unit": "hours",
+    "source_stage": "feature_engineering",
+    "non_null": 6004,
+    "coverage": 0.1596,
+    "example": "0.0786111111111111"
+  },
+  {
+    "variable": "n_issue_comments",
+    "dtype": "float64",
+    "definition": "Issue-style comments on PR",
+    "unit": "count",
+    "source_stage": "feature_engineering",
+    "non_null": 12975,
+    "coverage": 0.3449,
+    "example": "2.0"
+  },
+  {
+    "variable": "is_revert_flagged",
+    "dtype": "int64",
+    "definition": "revert_detected with NaN->0",
+    "unit": "0/1",
+    "source_stage": "feature_engineering",
+    "non_null": 37623,
+    "coverage": 1.0,
+    "example": "0"
+  }
+]

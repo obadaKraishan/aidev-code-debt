@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite the paper below."
+title: "Not All Agents Are Equal: Code Quality and Post-Merge Maintenance Across Five Autonomous Coding Agents in the Wild"
+authors:
+  - family-names: "Kraishan"
+    given-names: "Obada"
+    affiliation: "Texas Tech University"
+  - family-names: "Jitkajornwanich"
+    given-names: "Kulsawasd"
+    affiliation: "Texas Tech University"
+year: 2026
+url: "https://github.com/obadaKraishan/aidev-code-debt"
+keywords:
+  - AI coding agents
+  - technical debt
+  - mining software repositories
+  - empirical software engineering
+  - large language models
+preferred-citation:
+  type: conference-paper
+  title: "Not All Agents Are Equal: Code Quality and Post-Merge Maintenance Across Five Autonomous Coding Agents in the Wild"
+  authors:
+    - family-names: "Kraishan"
+      given-names: "Obada"
+    - family-names: "Jitkajornwanich"
+      given-names: "Kulsawasd"
+  year: 2026
+  conference:
+    name: "IEEE International Conference on Big Data (BigData 2026)"

@@ -1,0 +1,81 @@
+{
+  "coverage": [
+    {
+      "author_group": "Claude Code",
+      "has_rev": 0.24618736383442266
+    },
+    {
+      "author_group": "Cursor",
+      "has_rev": 0.25502920181700195
+    },
+    {
+      "author_group": "Devin",
+      "has_rev": 0.3685518955873213
+    },
+    {
+      "author_group": "GitHub Copilot",
+      "has_rev": 0.5116700201207244
+    },
+    {
+      "author_group": "Human",
+      "has_rev": 0.0
+    },
+    {
+      "author_group": "OpenAI Codex",
+      "has_rev": 0.05394742878113675
+    }
+  ],
+  "omnibus": [
+    {
+      "metric": "review_latency_hours",
+      "test": "Kruskal-Wallis H",
+      "k": 5,
+      "n_total": 6004,
+      "H": 88.87058424152735,
+      "df": 4,
+      "p": 2.287658294780176e-18,
+      "epsilon_squared": 0.014147455282801693
+    },
+    {
+      "metric": "n_reviews",
+      "test": "Kruskal-Wallis H",
+      "k": 5,
+      "n_total": 6004,
+      "H": 700.6241616902737,
+      "df": 4,
+      "p": 2.5532270059025613e-150,
+      "epsilon_squared": 0.11612338084518647
+    },
+    {
+      "metric": "n_change_requests",
+      "test": "Kruskal-Wallis H",
+      "k": 5,
+      "n_total": 6004,
+      "H": 293.0418768267259,
+      "df": 4,
+      "p": 3.4325638954079177e-62,
+      "epsilon_squared": 0.04818167641719052
+    },
+    {
+      "metric": "n_issue_comments",
+      "test": "Kruskal-Wallis H",
+      "k": 5,
+      "n_total": 4918,
+      "H": 242.95782091007638,
+      "df": 4,
+      "p": 2.1401333566227887e-51,
+      "epsilon_squared": 0.04863786299818367
+    },
+    {
+      "metric": "n_bot_reviews",
+      "test": "Kruskal-Wallis H",
+      "k": 5,
+      "n_total": 4535,
+      "H": 541.0198380039345,
+      "df": 4,
+      "p": 8.970581113857973e-116,
+      "epsilon_squared": 0.11854742560793256
+    }
+  ],
+  "pairwise": []
+}

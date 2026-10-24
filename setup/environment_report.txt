@@ -1,0 +1,61 @@
+============================================================================
+ ENVIRONMENT SETUP & HEALTH CHECK — AIDev Code-Debt Project
+ Run at: 2026-08-10 03:47:42 UTC
+============================================================================
+
+----------------------------------------------------------------------------
+ 1/5  Python version
+----------------------------------------------------------------------------
+  [ OK ] Python 3.12.2 (need >= 3.10)
+
+----------------------------------------------------------------------------
+ 2/5  Required Python packages
+----------------------------------------------------------------------------
+  [ OK ] pandas          v3.0.5      (dataframes everywhere)
+  [ OK ] numpy           v2.5.2      (numeric computing)
+  [ OK ] scipy           v1.18.0     (statistical tests)
+  [ OK ] statsmodels     v0.14.6     (BH correction, regression)
+  [ OK ] matplotlib      v3.11.1     (figures)
+  [ OK ] seaborn         v0.13.2     (publication plots)
+  [ OK ] requests        v2.34.2     (GitHub REST API)
+  [ OK ] python-dotenv   v?          (.env secret loading)
+  [ OK ] datasets        v5.0.1      (Hugging Face download)
+  [ OK ] pyarrow         v25.0.0     (parquet read/write)
+  [ OK ] tqdm            v4.70.0     (progress bars)
+
+----------------------------------------------------------------------------
+ 3/5  Secrets (.env)
+----------------------------------------------------------------------------
+  [ OK ] .env file loaded from /Users/obadakraishan/Desktop/ IEEE-BigData-2026/aidev-code-debt/.env
+  [ OK ] GITHUB_TOKEN present (…7KmT, 40 chars)
+  [WARN] HF_TOKEN missing — fine if the dataset is public
+
+----------------------------------------------------------------------------
+ 4/5  GitHub API connectivity
+----------------------------------------------------------------------------
+  [ OK ] API reachable — authenticated
+         limit=5000/h  remaining=4994  resets=04:33 UTC
+
+----------------------------------------------------------------------------
+ 5/5  Project folder tree
+----------------------------------------------------------------------------
+  [ OK ] exists   data/raw
+  [ OK ] exists   data/interim
+  [ OK ] exists   data/processed
+  [ OK ] exists   data/.api_cache
+  [ OK ] exists   analysis
+  [ OK ] exists   codebook
+  [ OK ] exists   paper/tables
+  [ OK ] exists   paper/figures
+  -> 0 folder(s) created, rest already in place
+
+----------------------------------------------------------------------------
+ SUMMARY
+----------------------------------------------------------------------------
+  [ OK ] No blocking issues.
+  [WARN] 1 warning(s):
+     - HF_TOKEN empty (only needed for gated datasets)
+
+============================================================================
+ ENVIRONMENT READY — proceed to data_collection/01_download_aidev.py
+============================================================================

@@ -1,0 +1,18 @@
+============================================================================
+ HUMAN BASELINE MATCHING REPORT
+ Generated: 2026-08-11T14:05:17.449943+00:00
+============================================================================
+ Human PRs in baseline      : 4,027
+ Distinct repos             : 810
+ Repos shared with agents   : 810
+ Agent PRs in those repos   : 9,750
+ Time window                : 2024-12-24 .. 2025-07-30
+ Merged rate  human / agent : 76.4% / 71.5%
+ Per-repo cap               : 20 (seed 42)
+----------------------------------------------------------------------------
+ NOTE: AIDev's human PRs come from the same repositories as agentic
+ PRs (>500-star subset), collected by the dataset authors. This
+ script documents and tightens the match; per-metric size matching
+ (PR size buckets) happens later in 03_feature_engineering.py where
+ additions/deletions are available for both groups.
+============================================================================

@@ -1,0 +1,165 @@
+==============================================================================
+ RQ5 — Human Review Latency and Depth
+==============================================================================
+ Research question : Does human review latency/depth differ for agent vs human PRs?
+ Generated (UTC)   : 2026-10-24 14:20:52
+ Alpha             : 0.05   |   CI: 95%   |   p-adjustment: Benjamini-Hochberg
+ Bootstrap draws   : 5,000 (seed 42)
+==============================================================================
+
+
+------------------------------------------------------------------------------
+ Review-data coverage by group (threat to validity)
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+ Coverage
+------------------------------------------------------------------------------
+   author_group share_with_human_review_record
+    Claude Code                         0.2462
+         Cursor                         0.2550
+          Devin                         0.3686
+ GitHub Copilot                         0.5117
+          Human                         0.0000
+   OpenAI Codex                         0.0539
+
+------------------------------------------------------------------------------
+ Descriptive statistics — hours to first human review
+------------------------------------------------------------------------------
+ Group                  n       Mean         SD     Median        Q1        Q3
+ -----------------------------------------------------------------------------
+ OpenAI Codex       1,176     55.036    162.725      2.342     0.205    24.376
+ Devin              1,779     29.368    121.340      0.984     0.180    15.751
+ GitHub Copilot     2,543     33.007    107.815      1.415     0.444    15.471
+ Cursor               393     31.030     76.319      3.589     0.286    23.226
+ Claude Code          113     95.334    229.019     12.621     0.810    59.079
+
+------------------------------------------------------------------------------
+ Omnibus test — hours to first human review across 5 groups
+------------------------------------------------------------------------------
+ Test          : Kruskal-Wallis H
+ Groups (k)    : 5  (OpenAI Codex, Devin, GitHub Copilot, Cursor, Claude Code)
+ Total n       : 6,004
+ Statistic     : H(4) = 88.87
+ p             : p < .001
+ Effect size   : epsilon-squared = 0.0141
+ 
+ READY-TO-PASTE (IEEE prose):
+ "A Kruskal-Wallis test indicated a significant difference in hours to first human review across the 5 author groups (H(4) = 88.87, p < .001, epsilon-squared = 0.014)."
+ NOTE: Human group lacks coverage for this metric; agent-vs-human contrast not computed (see coverage table). Cross-agent differences reported via omnibus.
+
+------------------------------------------------------------------------------
+ Descriptive statistics — human reviews per PR
+------------------------------------------------------------------------------
+ Group                  n       Mean         SD     Median        Q1        Q3
+ -----------------------------------------------------------------------------
+ OpenAI Codex       1,176      1.787      2.092      1.000     1.000     2.000
+ Devin              1,779      2.518      2.720      2.000     1.000     3.000
+ GitHub Copilot     2,543      3.602      3.392      2.000     1.000     4.000
+ Cursor               393      1.936      1.910      1.000     1.000     2.000
+ Claude Code          113      3.460      3.896      2.000     1.000     4.000
+
+------------------------------------------------------------------------------
+ Omnibus test — human reviews per PR across 5 groups
+------------------------------------------------------------------------------
+ Test          : Kruskal-Wallis H
+ Groups (k)    : 5  (OpenAI Codex, Devin, GitHub Copilot, Cursor, Claude Code)
+ Total n       : 6,004
+ Statistic     : H(4) = 700.62
+ p             : p < .001
+ Effect size   : epsilon-squared = 0.1161
+ 
+ READY-TO-PASTE (IEEE prose):
+ "A Kruskal-Wallis test indicated a significant difference in human reviews per PR across the 5 author groups (H(4) = 700.62, p < .001, epsilon-squared = 0.116)."
+ NOTE: Human group lacks coverage for this metric; agent-vs-human contrast not computed (see coverage table). Cross-agent differences reported via omnibus.
+
+------------------------------------------------------------------------------
+ Descriptive statistics — CHANGES_REQUESTED reviews per PR
+------------------------------------------------------------------------------
+ Group                  n       Mean         SD     Median        Q1        Q3
+ -----------------------------------------------------------------------------
+ OpenAI Codex       1,176      0.064      0.394      0.000     0.000     0.000
+ Devin              1,779      0.172      0.514      0.000     0.000     0.000
+ GitHub Copilot     2,543      0.429      1.050      0.000     0.000     0.000
+ Cursor               393      0.059      0.246      0.000     0.000     0.000
+ Claude Code          113      0.097      0.298      0.000     0.000     0.000
+
+------------------------------------------------------------------------------
+ Omnibus test — CHANGES_REQUESTED reviews per PR across 5 groups
+------------------------------------------------------------------------------
+ Test          : Kruskal-Wallis H
+ Groups (k)    : 5  (OpenAI Codex, Devin, GitHub Copilot, Cursor, Claude Code)
+ Total n       : 6,004
+ Statistic     : H(4) = 293.04
+ p             : p < .001
+ Effect size   : epsilon-squared = 0.0482
+ 
+ READY-TO-PASTE (IEEE prose):
+ "A Kruskal-Wallis test indicated a significant difference in CHANGES_REQUESTED reviews per PR across the 5 author groups (H(4) = 293.04, p < .001, epsilon-squared = 0.048)."
+ NOTE: Human group lacks coverage for this metric; agent-vs-human contrast not computed (see coverage table). Cross-agent differences reported via omnibus.
+
+------------------------------------------------------------------------------
+ Descriptive statistics — issue comments per PR
+------------------------------------------------------------------------------
+ Group                  n       Mean         SD     Median        Q1        Q3
+ -----------------------------------------------------------------------------
+ OpenAI Codex         712      2.865      2.248      2.000     1.000     4.000
+ Devin              1,775      3.689      2.740      3.000     2.000     5.000
+ GitHub Copilot     2,041      5.161      5.264      3.000     2.000     6.000
+ Cursor               299      2.472      1.775      2.000     1.000     3.000
+ Claude Code           91      3.835      4.331      2.000     1.000     5.000
+
+------------------------------------------------------------------------------
+ Omnibus test — issue comments per PR across 5 groups
+------------------------------------------------------------------------------
+ Test          : Kruskal-Wallis H
+ Groups (k)    : 5  (OpenAI Codex, Devin, GitHub Copilot, Cursor, Claude Code)
+ Total n       : 4,918
+ Statistic     : H(4) = 242.96
+ p             : p < .001
+ Effect size   : epsilon-squared = 0.0486
+ 
+ READY-TO-PASTE (IEEE prose):
+ "A Kruskal-Wallis test indicated a significant difference in issue comments per PR across the 5 author groups (H(4) = 242.96, p < .001, epsilon-squared = 0.049)."
+ NOTE: Human group lacks coverage for this metric; agent-vs-human contrast not computed (see coverage table). Cross-agent differences reported via omnibus.
+
+------------------------------------------------------------------------------
+ Descriptive statistics — bot reviews per PR
+------------------------------------------------------------------------------
+ Group                  n       Mean         SD     Median        Q1        Q3
+ -----------------------------------------------------------------------------
+ OpenAI Codex       1,560      1.618      1.450      1.000     1.000     2.000
+ Devin                610      2.052      2.484      1.000     1.000     2.000
+ GitHub Copilot     1,746      3.964      4.510      2.000     1.000     5.000
+ Cursor               497      2.064      2.565      1.000     1.000     2.000
+ Claude Code          122      2.107      2.024      1.000     1.000     2.000
+
+------------------------------------------------------------------------------
+ Omnibus test — bot reviews per PR across 5 groups
+------------------------------------------------------------------------------
+ Test          : Kruskal-Wallis H
+ Groups (k)    : 5  (OpenAI Codex, Devin, GitHub Copilot, Cursor, Claude Code)
+ Total n       : 4,535
+ Statistic     : H(4) = 541.02
+ p             : p < .001
+ Effect size   : epsilon-squared = 0.1185
+ 
+ READY-TO-PASTE (IEEE prose):
+ "A Kruskal-Wallis test indicated a significant difference in bot reviews per PR across the 5 author groups (H(4) = 541.02, p < .001, epsilon-squared = 0.119)."
+ NOTE: Human group lacks coverage for this metric; agent-vs-human contrast not computed (see coverage table). Cross-agent differences reported via omnibus.
+
+------------------------------------------------------------------------------
+ Assumption checks & test justification
+------------------------------------------------------------------------------
+ Software-engineering metrics (defect counts, churn, latency) are
+ heavy-tailed and zero-inflated; Shapiro-Wilk/D'Agostino normality
+ tests reject at these sample sizes and variances are unequal.
+ Non-parametric rank tests (Mann-Whitney, Kruskal-Wallis) with
+ Cliff's delta effect sizes are therefore used throughout, per
+ standard practice in empirical software engineering. All p-values
+ across families of comparisons are Benjamini-Hochberg adjusted
+ (FDR 0.05). Bootstrap CIs use 5,000 resamples, seed 42.
+
+==============================================================================
+ END OF REPORT
+==============================================================================

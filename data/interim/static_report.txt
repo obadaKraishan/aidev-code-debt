@@ -1,0 +1,22 @@
+============================================================================
+ STATIC ANALYSIS REPORT
+ Generated: 2026-08-12T02:03:09.987862+00:00
+============================================================================
+ PRs processed          : 37,623
+   analyzed ok          : 8,933 (23.7%)
+   no cached patch      : 9,769
+   no target-lang lines : 18,921
+ Added lines analyzed   : 1,348,822
+ Security smells found  : 662
+ PRs w/ >=1 sec smell   : 283 (3.2% of analyzed)
+----------------------------------------------------------------------------
+ CWE class breakdown (total hits):
+   CWE-798_hardcoded_secret                  291
+   CWE-89_sql_injection                        3
+   CWE-78_cmd_injection                       28
+   CWE-95_eval_injection                      58
+   CWE-502_unsafe_deserialization             21
+   CWE-327_weak_crypto                        31
+   CWE-79_xss                                207
+   CWE-22_path_traversal                      23
+============================================================================

@@ -1,0 +1,21 @@
+============================================================================
+ VALIDATION REPORT
+ Generated: 2026-10-24T14:18:14.205652+00:00
+============================================================================
+  [ OK ] required columns present                   64 columns
+  [ OK ] PR ids unique                              0 duplicates
+  [ OK ] author groups match config                 6/6 groups present
+  [ OK ] every group n >= 30                        min group n = 459
+  [ OK ] changed_lines >= 0                         0 negative
+  [ OK ] review latency >= 0                        0 negative
+  [ OK ] comment_ratio in [0,1]                     0 out of range
+  [ OK ] created_at parseable                       0 unparseable
+  [ OK ] RQ1 coverage (2 features)                  23.7%
+  [ OK ] RQ2 coverage (3 features)                  23.7%
+  [ OK ] RQ3 coverage (2 features)                  69.9%
+  [ OK ] RQ4 coverage (8 features)                  100.0%
+  [ OK ] RQ5 coverage (2 features)                  16.0%
+----------------------------------------------------------------------------
+ Failures: 0  Warnings: 0
+ VERDICT : MASTER TABLE VALID — safe to run analyses
+============================================================================

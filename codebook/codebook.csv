@@ -1,0 +1,65 @@
+variable,dtype,definition,unit,source_stage,non_null,coverage,example
+id,int64,"PR unique id (GitHub, via AIDev)",-,AIDev,37623,1.0,3264933329
+number,int64,PR number within its repository,-,AIDev,37623,1.0,2911
+title,str,PR title text,-,AIDev,37623,1.0,Fix: Wait for all partitions in load_col
+agent,str,Raw AIDev author label,-,AIDev,37623,1.0,Claude_Code
+user,str,PR author login,-,AIDev,37623,1.0,weiliu1031
+state,str,PR state (open/closed),-,AIDev,37623,1.0,closed
+created_at,str,PR creation timestamp,UTC,AIDev,37623,1.0,2025-07-26 02:59:01+00:00
+closed_at,str,PR close timestamp,UTC,AIDev,35010,0.9305,2025-07-29T07:01:20Z
+merged_at,str,PR merge timestamp (raw),UTC,AIDev,27090,0.72,2025-07-26T22:12:24Z
+html_url,str,PR web URL,-,AIDev,37623,1.0,https://github.com/milvus-io/pymilvus/pu
+author_group,str,Canonical author group (5 agents + Human),-,clean_and_merge,37623,1.0,Claude Code
+repo,str,owner/name parsed from html_url,-,clean_and_merge,37623,1.0,milvus-io/pymilvus
+merged_at_dt,str,Parsed merge timestamp,UTC,clean_and_merge,27090,0.72,2025-07-26 22:12:24+00:00
+is_merged,int64,1 if PR merged,0/1,clean_and_merge,37623,1.0,0
+enrich_status,str,GitHub enrichment outcome (ok/pr_gone/bad_url),-,enrich_github,28716,0.7633,ok
+n_files,float64,Files changed in PR,count,enrich_github,27846,0.7401,3.0
+additions,float64,Lines added,lines,enrich_github,27846,0.7401,394.0
+deletions,float64,Lines deleted,lines,enrich_github,27846,0.7401,2.0
+changed_files_list,str,First 50 changed file paths,;-sep,enrich_github,27615,0.734,pymilvus/client/async_grpc_handler.py;py
+languages_touched,str,Target languages present in diff,;-sep,enrich_github,9133,0.2428,Python
+post_merge_commits_90d,float64,Commits touching PR's top file in 90d after merge,count,enrich_github,26283,0.6986,12.0
+post_merge_authors_90d,float64,Distinct authors of those commits,count,enrich_github,26283,0.6986,4.0
+revert_detected,float64,1 if revert-style commit found in follow-up window,0/1,enrich_github,26283,0.6986,0.0
+changed_lines,float64,additions + deletions,lines,clean_and_merge,27846,0.7401,396.0
+static_status,str,Patch analysis outcome (ok/no_cache/no_target_lang),-,static_analysis,37623,1.0,ok
+added_lines_analyzed,float64,Added diff lines in target languages,lines,static_analysis,8933,0.2374,394.0
+todo_count,float64,TODO/FIXME/HACK/XXX markers in added lines,count,static_analysis,8933,0.2374,0.0
+long_lines,float64,Added lines > 120 chars,count,static_analysis,8933,0.2374,0.0
+comment_lines,float64,Added comment lines,count,static_analysis,8933,0.2374,36.0
+comment_ratio,float64,comment_lines / added lines,0-1,static_analysis,8933,0.2374,0.0913705583756345
+branch_count,float64,Branching keywords in added lines,count,static_analysis,8933,0.2374,21.0
+branch_density,float64,branch_count / added lines,per line,static_analysis,8933,0.2374,0.0532994923857868
+max_nesting,float64,Max indent depth (4-space units) in added lines,levels,static_analysis,8933,0.2374,8.0
+CWE-798_hardcoded_secret,float64,Hits of CWE-798_hardcoded_secret pattern in added lines,count,static_analysis,8933,0.2374,0.0
+CWE-89_sql_injection,float64,Hits of CWE-89_sql_injection pattern in added lines,count,static_analysis,8933,0.2374,0.0
+CWE-78_cmd_injection,float64,Hits of CWE-78_cmd_injection pattern in added lines,count,static_analysis,8933,0.2374,0.0
+CWE-95_eval_injection,float64,Hits of CWE-95_eval_injection pattern in added lines,count,static_analysis,8933,0.2374,0.0
+CWE-502_unsafe_deserialization,float64,Hits of CWE-502_unsafe_deserialization pattern in added lines,count,static_analysis,8933,0.2374,0.0
+CWE-327_weak_crypto,float64,Hits of CWE-327_weak_crypto pattern in added lines,count,static_analysis,8933,0.2374,0.0
+CWE-79_xss,float64,Hits of CWE-79_xss pattern in added lines,count,static_analysis,8933,0.2374,0.0
+CWE-22_path_traversal,float64,Hits of CWE-22_path_traversal pattern in added lines,count,static_analysis,8933,0.2374,0.0
+security_smells_total,float64,Sum over CWE catalog hits,count,static_analysis,8933,0.2374,0.0
+maintainability_smells_total,float64,todo_count + long_lines,count,static_analysis,8933,0.2374,0.0
+languages_analyzed,str,Languages actually analyzed,;-sep,static_analysis,8933,0.2374,Python
+oversize_diff,float64,1 if diff exceeded MAX_DIFF_LINES cap,0/1,static_analysis,208,0.0055,1.0
+size_bucket,str,PR size class XS/S/M/L/XL by changed_lines,-,feature_engineering,27846,0.7401,L
+security_smell_density,float64,Security smells per 100 added lines,/100 lines,feature_engineering,8933,0.2374,0.0
+maintainability_smell_density,float64,Maintainability smells per 100 added lines,/100 lines,feature_engineering,8933,0.2374,0.0
+churn_per_100_lines,float64,Post-merge commits per 100 changed lines,/100 lines,feature_engineering,26254,0.6978,15.789473684210526
+has_CWE-798,int64,1 if any CWE-798 hit in PR,0/1,feature_engineering,37623,1.0,0
+has_CWE-89,int64,1 if any CWE-89 hit in PR,0/1,feature_engineering,37623,1.0,0
+has_CWE-78,int64,1 if any CWE-78 hit in PR,0/1,feature_engineering,37623,1.0,0
+has_CWE-95,int64,1 if any CWE-95 hit in PR,0/1,feature_engineering,37623,1.0,0
+has_CWE-502,int64,1 if any CWE-502 hit in PR,0/1,feature_engineering,37623,1.0,0
+has_CWE-327,int64,1 if any CWE-327 hit in PR,0/1,feature_engineering,37623,1.0,0
+has_CWE-79,int64,1 if any CWE-79 hit in PR,0/1,feature_engineering,37623,1.0,0
+has_CWE-22,int64,1 if any CWE-22 hit in PR,0/1,feature_engineering,37623,1.0,0
+n_bot_reviews,float64,Bot reviews on PR,count,feature_engineering,4535,0.1205,1.0
+n_reviews,float64,Human reviews on PR (bots excluded),count,feature_engineering,6004,0.1596,1.0
+first_review_at,str,First human review timestamp,UTC,feature_engineering,6004,0.1596,2025-07-26 13:36:02+00:00
+n_change_requests,float64,Reviews with CHANGES_REQUESTED,count,feature_engineering,6004,0.1596,0.0
+review_latency_hours,float64,Hours from PR creation to first human review,hours,feature_engineering,6004,0.1596,0.0786111111111111
+n_issue_comments,float64,Issue-style comments on PR,count,feature_engineering,12975,0.3449,2.0
+is_revert_flagged,int64,revert_detected with NaN->0,0/1,feature_engineering,37623,1.0,0
