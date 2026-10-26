@@ -48,9 +48,13 @@ if TOKEN:
 
 FOLLOWUP_DAYS = 90          # window for post-merge maintenance signals
 REVERT_RE = re.compile(r"\brevert(s|ed|ing)?\b", re.IGNORECASE)
-# a revert commit proper: "Revert ...", "Reverts owner/repo#N", or git's "This reverts commit"
-REVERT_COMMIT_RE = re.compile(r"^\s*Revert\b|^\s*Reverts\s+\S+#\d+|This reverts commit",
-                              re.IGNORECASE | re.MULTILINE)
+# a revert commit proper: the subject line starts with "Revert", or git's "This reverts commit"
+REVERT_SUBJECT_RE = re.compile(r"^\s*Revert\b", re.IGNORECASE)
+
+
+def is_revert_commit(msg: str) -> bool:
+    subject = (msg or "").strip().split("\n", 1)[0]
+    return bool(REVERT_SUBJECT_RE.match(subject)) or "This reverts commit" in (msg or "")
 CHECKPOINT_EVERY = 200      # write partial CSV every N PRs
 
 
@@ -171,7 +175,7 @@ def enrich_pr(row: pd.Series) -> dict:
         # keep commits strictly after the merge and drop the PR's own commits.
         # v1.0.0 compared the timestamps as text ("...Z" vs "...+00:00"), which kept
         # the PR's own squash or merge commit; parse them instead (fixed in v1.1.0).
-        own_tag = f"#{number}"
+        own_tag = re.compile(rf"#{number}\b")
 
         def authored(c):
             return pd.to_datetime(c.get("commit", {}).get("author", {}).get("date"),
@@ -179,8 +183,10 @@ def enrich_pr(row: pd.Series) -> dict:
 
         after = [c for c in commits
                  if pd.notna(authored(c)) and authored(c) > merged_dt]
+        # the PR's own commits: any non-revert commit that names the PR
         later = [c for c in after
-                 if own_tag not in c.get("commit", {}).get("message", "")]
+                 if is_revert_commit(c.get("commit", {}).get("message", ""))
+                 or not own_tag.search(c.get("commit", {}).get("message", ""))]
         out["post_merge_commits_90d"] = len(later)
         out["post_merge_authors_90d"] = len({
             (c.get("author") or {}).get("login")
@@ -190,12 +196,12 @@ def enrich_pr(row: pd.Series) -> dict:
             REVERT_RE.search(c.get("commit", {}).get("message", ""))
             for c in later))
         out["revert_commit"] = int(any(
-            REVERT_COMMIT_RE.search(c.get("commit", {}).get("message", ""))
+            is_revert_commit(c.get("commit", {}).get("message", ""))
             for c in later))
         title = str(row.get("title") or "").strip().lower()
         out["revert_of_pr"] = int(any(
-            REVERT_COMMIT_RE.search(m) and (own_tag in m or (len(title) > 12 and title[:60] in m.lower()))
-            for m in (c.get("commit", {}).get("message", "") for c in after)))
+            is_revert_commit(m) and (own_tag.search(m) or (len(title) > 12 and title[:60] in m.lower()))
+            for m in (c.get("commit", {}).get("message", "") for c in later)))
     return out
 
 
