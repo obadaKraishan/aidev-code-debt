@@ -43,7 +43,7 @@ def main(column):
         lo, hi = proportion_confint(k, n, method="wilson")
         cs = st.chi_square(pd.DataFrame([[k, n - k], [hk, hn - hk]]))
         rows.append([a, k / n, lo, hi, cs["odds_ratio"], cs["p"]])
-    r = pd.DataFrame(rows, columns=["agent", "rate", "lo", "hi", "or", "p"])
+    r = pd.DataFrame(rows, columns=["agent", "rate", "lo", "hi", "odds", "p"])
     r["p_adj"] = st.adjust_pvalues(r.p.tolist())
     r = r.sort_values("rate")
 
@@ -51,16 +51,17 @@ def main(column):
     fig, ax = plt.subplots(figsize=(3.45, 1.95))
     ax.axvspan(100 * hlo, 100 * hhi, color="#E6E6E6", zorder=0)
     ax.axvline(100 * hk / hn, color="#333333", ls="--", lw=0.9, zorder=1)
+    lab_x = max(100 * r.hi.max(), 100 * hhi) + 0.8
     for i, x in enumerate(r.itertuples()):
         c = COLORS[x.agent]
         ax.errorbar(100 * x.rate, i, xerr=[[100 * (x.rate - x.lo)], [100 * (x.hi - x.rate)]], fmt="o", ms=3.5,
                     color=c, ecolor=c, elinewidth=1.4, capsize=2.5, zorder=3)
-        ax.text(100 * x.hi + 0.25, i, f"OR {x.or:.2f}" + ("*" if x.p_adj < config.ALPHA else ""),
+        ax.text(lab_x, i, f"OR {x.odds:.2f}" + ("*" if x.p_adj < config.ALPHA else ""),
                 va="center", fontsize=7.5)
     ax.set_yticks(range(len(r)), r.agent)
-    ax.set_xlabel("PRs with a revert commit within 90 days of merge (%)")
-    hi = max(100 * r.hi.max(), 100 * hhi)
-    ax.set_xlim(0, hi * 1.32)
+    ax.set_xlabel("PRs with a revert commit within 90 days (%)")
+    ax.set_xlim(0, lab_x + 3.2)
+    ax.set_xticks([0, 2.5, 5, 7.5, 10])
     ax.grid(axis="x", color="#DDDDDD", lw=0.6)
     ax.set_axisbelow(True)
     for s_ in ["top", "right"]:
