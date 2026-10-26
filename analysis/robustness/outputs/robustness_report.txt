@@ -1,0 +1,89 @@
+==============================================================================
+ Adjusted models and robustness checks
+==============================================================================
+
+A. Size-adjusted logistic models, errors clustered by repository (1,101 repositories, 8,933 analyzed PRs)
+  any security smell, pooled agents vs human: 0.86 [0.60, 1.23], p = .409; size 2.13 [1.93, 2.35], p < .001
+    OpenAI Codex    1.10 [0.66, 1.85], p = .716
+    Devin           1.16 [0.65, 2.05], p = .617
+    GitHub Copilot  0.56 [0.33, 0.96], p = .035
+    Cursor          0.31 [0.14, 0.68], p = .004
+    Claude Code     0.77 [0.44, 1.33], p = .345
+  has_CWE-798 pooled agents vs human: 0.57 [0.33, 0.97], p = .037
+  has_CWE-95 pooled agents vs human: 0.36 [0.18, 0.74], p = .005
+
+B. Reverts as published (26,283 merged PRs, 1,888 repositories)
+  revert flag as published
+  group                n    rate  raw OR                       adjusted OR (clustered)      within-repository OR
+  OpenAI Codex    17,756   6.1%  0.50 [0.44, 0.57], p < .001  0.50 [0.31, 0.83], p = .007  0.77 [0.59, 1.02], p = .070 (BH p = .176; 263 shared repos, agent 14.2% vs human 11.5%)
+  Devin            2,185  14.5%  1.31 [1.11, 1.54], p = .004  1.31 [0.87, 1.97], p = .203  0.99 [0.72, 1.37], p = .970 (BH p = .970; 81 shared repos, agent 14.4% vs human 12.5%)
+  GitHub Copilot   2,094  12.5%  1.10 [0.93, 1.31], p = .457  1.10 [0.78, 1.54], p = .598  1.05 [0.75, 1.47], p = .786 (BH p = .970; 146 shared repos, agent 14.4% vs human 10.1%)
+  Cursor             946  11.4%  1.00 [0.79, 1.25], p = 1.000 0.98 [0.62, 1.56], p = .932  0.49 [0.28, 0.84], p = .009 (BH p = .046; 55 shared repos, agent 11.8% vs human 17.0%)
+  Claude Code        267  10.5%  0.90 [0.60, 1.36], p = .878  0.84 [0.51, 1.39], p = .494  1.34 [0.54, 3.34], p = .531 (BH p = .884; 46 shared repos, agent 12.2% vs human 13.1%)
+  Human            3,035  11.5%
+  size: OR per log unit 1.04 [0.96, 1.14], p = .317
+
+C. Concentration
+  OpenAI Codex    17,756 PRs in  825 repos; largest repo 43.0%; revert without it 5.4%; one PR per repo 5.2%
+  Devin            2,185 PRs in  180 repos; largest repo 11.2%; revert without it 14.7%; one PR per repo 8.9%
+  GitHub Copilot   2,094 PRs in  530 repos; largest repo  5.0%; revert without it 10.9%; one PR per repo 8.3%
+  Cursor             946 PRs in  201 repos; largest repo  7.1%; revert without it 11.1%; one PR per repo 6.5%
+  Claude Code        267 PRs in  126 repos; largest repo 10.1%; revert without it 10.8%; one PR per repo 11.9%
+  Human            3,035 PRs in  681 repos; largest repo  0.7%; revert without it 11.5%; one PR per repo 11.3%
+  Codex in repos with baseline human PRs: 14.2% (n = 2,280); elsewhere 4.9% (n = 15,476)
+
+D. Corrected post-merge measures (25,657 of 26,283 PRs recomputed; original values reproduced exactly for 96.4%)
+  follow-up commits (90 days): H(5) = 529.8, p < .001, eps2 = 0.020
+    OpenAI Codex    delta = +0.072 [+0.051, +0.094] (negligible), BH p < .001; median 3.00 vs human 3.00
+    Devin           delta = -0.039 [-0.070, -0.007] (negligible), BH p = .021; median 2.00 vs human 3.00
+    GitHub Copilot  delta = -0.229 [-0.260, -0.197] (small), BH p < .001; median 1.00 vs human 3.00
+    Cursor          delta = -0.055 [-0.096, -0.015] (negligible), BH p = .019; median 2.00 vs human 3.00
+    Claude Code     delta = -0.084 [-0.150, -0.015] (negligible), BH p = .025; median 2.00 vs human 3.00
+  follow-up commits per 100 changed lines: H(5) = 370.3, p < .001, eps2 = 0.014
+    OpenAI Codex    delta = +0.020 [-0.003, +0.043] (negligible), BH p = .100; median 4.94 vs human 3.85
+    Devin           delta = -0.020 [-0.052, +0.012] (negligible), BH p = .232; median 3.23 vs human 3.85
+    GitHub Copilot  delta = -0.205 [-0.236, -0.175] (small), BH p < .001; median 0.91 vs human 3.85
+    Cursor          delta = -0.077 [-0.119, -0.036] (negligible), BH p < .001; median 2.26 vs human 3.85
+    Claude Code     delta = -0.279 [-0.338, -0.217] (small), BH p < .001; median 0.37 vs human 3.85
+
+  revert commit on the file (primary corrected definition)
+  group                n    rate  raw OR                       adjusted OR (clustered)      within-repository OR
+  OpenAI Codex    17,440   4.4%  0.63 [0.54, 0.75], p < .001  0.63 [0.36, 1.12], p = .115  0.87 [0.61, 1.25], p = .455 (BH p = .597; 250 shared repos, agent 10.9% vs human 6.9%)
+  Devin            2,138  10.1%  1.53 [1.25, 1.87], p < .001  1.52 [0.94, 2.48], p = .089  0.93 [0.61, 1.41], p = .722 (BH p = .722; 76 shared repos, agent 9.4% vs human 7.0%)
+  GitHub Copilot   2,051   5.2%  0.75 [0.59, 0.96], p = .041  0.74 [0.50, 1.09], p = .132  0.67 [0.42, 1.07], p = .092 (BH p = .231; 143 shared repos, agent 5.2% vs human 6.0%)
+  Cursor             913   8.8%  1.31 [1.00, 1.72], p = .073  1.28 [0.76, 2.16], p = .348  0.45 [0.23, 0.85], p = .014 (BH p = .072; 53 shared repos, agent 7.9% vs human 11.9%)
+  Claude Code        256   3.9%  0.56 [0.29, 1.06], p = .095  0.50 [0.23, 1.09], p = .082  0.66 [0.21, 2.07], p = .478 (BH p = .597; 44 shared repos, agent 7.1% vs human 10.8%)
+  Human            2,859   6.8%
+  size: OR per log unit 1.06 [0.95, 1.17], p = .282
+
+  any 'revert' word, own commits excluded
+  group                n    rate  raw OR                       adjusted OR (clustered)      within-repository OR
+  OpenAI Codex    17,440   6.0%  0.53 [0.46, 0.60], p < .001  0.53 [0.31, 0.88], p = .015  0.82 [0.61, 1.10], p = .184 (BH p = .393; 250 shared repos, agent 13.7% vs human 10.7%)
+  Devin            2,138  13.0%  1.22 [1.03, 1.46], p = .059  1.22 [0.80, 1.86], p = .351  0.84 [0.60, 1.18], p = .315 (BH p = .393; 76 shared repos, agent 13.0% vs human 12.7%)
+  GitHub Copilot   2,051  10.2%  0.93 [0.78, 1.12], p = .629  0.92 [0.65, 1.31], p = .663  0.81 [0.56, 1.17], p = .261 (BH p = .393; 143 shared repos, agent 11.9% vs human 9.7%)
+  Cursor             913  10.8%  1.00 [0.78, 1.27], p = 1.000 0.98 [0.61, 1.56], p = .926  0.41 [0.23, 0.73], p = .002 (BH p = .012; 53 shared repos, agent 10.7% vs human 16.8%)
+  Claude Code        256   8.6%  0.77 [0.49, 1.21], p = .507  0.71 [0.40, 1.26], p = .241  0.96 [0.37, 2.49], p = .930 (BH p = .930; 44 shared repos, agent 10.7% vs human 13.9%)
+  Human            2,859  10.9%
+  size: OR per log unit 1.05 [0.96, 1.15], p = .304
+
+  revert of this PR
+  group                n    rate  raw OR                       adjusted OR (clustered)      within-repository OR
+  OpenAI Codex    17,440   0.3%  0.51 [0.29, 0.92], p = .175  0.51 [0.12, 2.14], p = .358  1.37 [0.56, 3.36], p = .492 (BH p = .999; 250 shared repos, agent 1.7% vs human 0.7%)
+  Devin            2,138   0.8%  1.61 [0.81, 3.20], p = .388  1.61 [0.79, 3.28], p = .194  4.69 [0.55, 39.78], p = .156 (BH p = .781; 76 shared repos, agent 1.0% vs human 0.1%)
+  GitHub Copilot   2,051   0.9%  1.68 [0.84, 3.34], p = .388  1.65 [0.86, 3.17], p = .133  1.36 [0.38, 4.81], p = .633 (BH p = .999; 143 shared repos, agent 1.0% vs human 0.5%)
+  Cursor             913   0.7%  1.25 [0.49, 3.24], p = 1.000 1.22 [0.41, 3.64], p = .725  0.00 [0.00, 5283310736894386367688757907753228795602133400905614146522251501075402500023164959755437434994688.00], p = .941 (BH p = .999; 53 shared repos, agent 0.0% vs human 0.3%)
+  Claude Code        256   0.4%  0.74 [0.10, 5.65], p = 1.000 0.65 [0.08, 5.39], p = .690  13698598.93 [0.00, inf], p = .999 (BH p = .999; 44 shared repos, agent 1.2% vs human 0.4%)
+  Human            2,859   0.5%
+  size: OR per log unit 1.08 [0.93, 1.25], p = .315
+
+  sensitivity: PRs whose original values were reproduced exactly
+  revert commit on the file
+  group                n    rate  raw OR                       adjusted OR (clustered)      within-repository OR
+  OpenAI Codex    16,752   3.7%  0.52 [0.44, 0.62], p < .001  0.52 [0.28, 0.97], p = .041  0.73 [0.51, 1.06], p = .098 (BH p = .163; 247 shared repos, agent 5.2% vs human 6.9%)
+  Devin            2,088  10.2%  1.55 [1.27, 1.91], p < .001  1.55 [0.95, 2.53], p = .079  0.92 [0.60, 1.40], p = .688 (BH p = .688; 75 shared repos, agent 9.6% vs human 6.9%)
+  GitHub Copilot   2,024   5.2%  0.76 [0.59, 0.97], p = .037  0.75 [0.51, 1.10], p = .145  0.66 [0.41, 1.05], p = .081 (BH p = .163; 138 shared repos, agent 5.3% vs human 6.1%)
+  Cursor             879   9.1%  1.37 [1.04, 1.80], p = .037  1.35 [0.80, 2.26], p = .263  0.51 [0.26, 0.97], p = .041 (BH p = .163; 52 shared repos, agent 8.1% vs human 12.3%)
+  Claude Code        242   4.1%  0.59 [0.31, 1.13], p = .140  0.55 [0.25, 1.18], p = .126  0.71 [0.22, 2.25], p = .559 (BH p = .688; 42 shared repos, agent 7.9% vs human 11.3%)
+  Human            2,745   6.8%
+  size: OR per log unit 1.04 [0.95, 1.14], p = .346
+
