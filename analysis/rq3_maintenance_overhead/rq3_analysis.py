@@ -44,9 +44,26 @@ def main():
            & df["post_merge_commits_90d"].notna()].copy()
     print(f"  merged PRs with 90-day follow-up: {len(d):,}")
 
+    # v1.1.0: use the corrected post-merge measures when they exist
+    # (data_collection/04_recompute_followup.py): commits strictly after the
+    # merge with the PR's own commits excluded, and a revert commit proper.
+    recomputed = config.DATA_INTERIM / "followup_recomputed.csv"
+    note = "published v1.0.0 measures"
+    if recomputed.exists():
+        rc = pd.read_csv(recomputed)
+        rc = rc[rc.status == "ok"][["id", "followup_commits_90d", "revert_format"]]
+        d = d.merge(rc, on="id", how="inner")
+        d["post_merge_commits_90d"] = d["followup_commits_90d"]
+        d["churn_per_100_lines"] = 100 * d["followup_commits_90d"] / d["changed_lines"].replace(0, np.nan)
+        d["revert_detected"] = d["revert_format"]
+        note = ("corrected measures from followup_recomputed.csv (own commits excluded; "
+                "revert = a revert commit on the file)")
+        print(f"  using corrected measures for {len(d):,} PRs")
+
     rb = ReportBuilder(RQ)
     rb.text(f"Analysis population: {len(d):,} merged PRs with a 90-day "
-            "post-merge observation window on the PR's most-changed file.")
+            "post-merge observation window on the PR's most-changed file; "
+            f"{note}.")
     rows, extra = [], []
 
     # (a) churn metrics
