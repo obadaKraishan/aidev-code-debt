@@ -21,10 +21,10 @@ with 58,792 cached GitHub REST API responses.
 | Folder               | Contents                                                                                                                                                                                                                                           |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `setup/`           | `config.py`, the single source of truth: agent labels, human-baseline matching rules, languages, diff-size limits, CWE smell catalog, statistical settings. `setup_environment.py` checks the environment before any collection.               |
-| `data_collection/` | AIDev download, matched human baseline, GitHub enrichment (cached, resumable, 90-day follow-up on the most-changed file).                                                                                                                          |
+| `data_collection/` | AIDev download, matched human baseline, GitHub enrichment (cached, resumable), and `04_recompute_followup.py`, which rebuilds the 90-day post-merge measures from each repository's git history (v1.1.0).                                         |
 | `data_processing/` | Clean and merge, patch-level static analysis, feature engineering into `master.csv`.                                                                                                                                                             |
 | `data_validation/` | Quality gate: schema, ranges, group coverage. Exits non-zero on failure.                                                                                                                                                                           |
-| `codebook/`        | Generated variable dictionary for all 63 columns of `master.csv`.                                                                                                                                                                                |
+| `codebook/`        | Generated variable dictionary for all 64 columns of `master.csv`.                                                                                                                                                                                |
 | `analysis/rq*/`    | One self-contained folder per research question. Each writes `rqN_results.csv`, `rqN_results.json`, a statistical report with sample sizes, test statistics, raw and BH-adjusted p-values, effect sizes with bootstrap intervals, and figures. |
 | `data/`            | `interim/` (enriched and merged PR tables, static metrics, human baseline) and `processed/` (`master.csv` and reports).                                                                                                                      |
 | `utils/`           | I/O helpers, the statistics engine (Mann-Whitney with Cliff's delta, Kruskal-Wallis with epsilon-squared and Dunn, chi-square and Fisher with odds ratios, bootstrap), and the report builder.                                                     |
@@ -36,6 +36,7 @@ with 58,792 cached GitHub REST API responses.
 | RQ3 Post-merge maintenance overhead     | `analysis/rq3_maintenance_overhead/`   |
 | RQ4 Vulnerability classes               | `analysis/rq4_cwe_overrepresentation/` |
 | RQ5 Human review behavior               | `analysis/rq5_review_dynamics/`        |
+| Size-adjusted and within-repository models, concentration checks, Fig. 3 | `analysis/robustness/` |
 
 ## Reproduce the results from the shipped tables
 
@@ -64,6 +65,24 @@ cp .env.example .env            # add GITHUB_TOKEN (and HF_TOKEN if required)
 python setup/setup_environment.py
 python run_all.py               # or --skip-enrich to reuse an existing cache
 ```
+
+## Version 1.1.0 (November 2026)
+
+- **Post-merge measures corrected.** In v1.0.0, `02_enrich_github.py` compared commit timestamps as text
+  (`...Z` sorts after `...+00:00` at the same second), so each PR's own squash or merge commit was counted as a
+  follow-up commit, and the revert flag fired on any message containing the word "revert". The new
+  `data_collection/04_recompute_followup.py` rebuilds the measures from git history for every merged PR, excludes the
+  PR's own commits, and reports three revert definitions (any "revert" word; a revert commit; a revert of this PR).
+  Run with the old rules, it reproduces the v1.0.0 values, which validates the method. Output:
+  `data/interim/followup_recomputed.csv`. `02_enrich_github.py` is fixed for future runs.
+- **RQ3 uses the corrected measures** when `followup_recomputed.csv` is present (the camera-ready numbers).
+- **`analysis/robustness/`** adds the size-adjusted, repository-clustered logistic models quoted in the paper (RQ1,
+  RQ3, RQ4), within-repository comparisons (conditional logit and Mantel-Haenszel), concentration checks, and the
+  script for Fig. 3.
+- Notes on shipped reports: `data/interim/enrichment_report.txt` describes every PR submitted to enrichment before the
+  human baseline was matched (a superset of the paper's corpus); the paper's counts come from `master.csv`.
+  AIDev's human PR sample comes from repositories with more than 500 stars.
+- Removed a stale `data/raw/` download report left by a failed test run; `01_download_aidev.py` writes a fresh one.
 
 ## Citation
 
