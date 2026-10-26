@@ -26,8 +26,8 @@
 ----------------------------------------------------------------------------
  3/5  Secrets (.env)
 ----------------------------------------------------------------------------
-  [ OK ] .env file loaded from /Users/obadakraishan/Desktop/ IEEE-BigData-2026/aidev-code-debt/.env
-  [ OK ] GITHUB_TOKEN present (…7KmT, 40 chars)
+  [ OK ] .env file loaded from <project root>/.env
+  [ OK ] GITHUB_TOKEN present (40 chars)
   [WARN] HF_TOKEN missing — fine if the dataset is public
 
 ----------------------------------------------------------------------------

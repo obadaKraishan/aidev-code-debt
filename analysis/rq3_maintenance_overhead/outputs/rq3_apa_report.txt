@@ -2,202 +2,202 @@
  RQ3 — Post-Merge Maintenance Overhead
 ==============================================================================
  Research question : What is the post-merge maintenance overhead of agent code (churn, reverts, time-to-fix)?
- Generated (UTC)   : 2026-10-26 16:25:12
+ Generated (UTC)   : 2026-10-26 17:25:34
  Alpha             : 0.05   |   CI: 95%   |   p-adjustment: Benjamini-Hochberg
  Bootstrap draws   : 5,000 (seed 42)
 ==============================================================================
 
- Analysis population: 25,657 merged PRs with a 90-day post-merge observation window on the PR's most-changed file; corrected measures from followup_recomputed.csv (own commits excluded; revert = a revert commit on the file).
+ Analysis population: 25,658 merged PRs with a 90-day post-merge observation window on the PR's most-changed file; corrected measures from followup_recomputed.csv (own commits excluded; revert = a revert commit on the file).
 
 ------------------------------------------------------------------------------
  Descriptive statistics — post-merge commits touching top file (90d)
 ------------------------------------------------------------------------------
  Group                  n       Mean         SD     Median        Q1        Q3
  -----------------------------------------------------------------------------
- OpenAI Codex      17,440     16.980     29.498      3.000     1.000    15.000
- Devin              2,138      9.120     18.406      2.000     1.000     7.000
- GitHub Copilot     2,051      4.585     11.164      1.000     0.000     4.000
- Cursor               913      7.852     15.767      2.000     1.000     8.000
- Claude Code          256      6.688     14.791      2.000     1.000     6.000
- Human              2,859     10.468     20.069      3.000     1.000     9.000
+ OpenAI Codex      17,441     16.983     29.498      3.000     1.000    15.000
+ Devin              2,138      9.140     18.461      2.000     1.000     7.000
+ GitHub Copilot     2,051      4.588     11.165      1.000     0.000     4.000
+ Cursor               913      7.859     15.769      2.000     1.000     8.000
+ Claude Code          256      6.691     14.790      2.000     1.000     6.000
+ Human              2,859     10.474     20.068      3.000     1.000     9.000
 
 ------------------------------------------------------------------------------
  Omnibus test — post-merge commits touching top file (90d) across 6 groups
 ------------------------------------------------------------------------------
  Test          : Kruskal-Wallis H
  Groups (k)    : 6  (OpenAI Codex, Devin, GitHub Copilot, Cursor, Claude Code, Human)
- Total n       : 25,657
- Statistic     : H(5) = 529.76
+ Total n       : 25,658
+ Statistic     : H(5) = 528.09
  p             : p < .001
- Effect size   : epsilon-squared = 0.0205
+ Effect size   : epsilon-squared = 0.0204
  
  READY-TO-PASTE (IEEE prose):
- "A Kruskal-Wallis test indicated a significant difference in post-merge commits touching top file (90d) across the 6 author groups (H(5) = 529.76, p < .001, epsilon-squared = 0.020)."
+ "A Kruskal-Wallis test indicated a significant difference in post-merge commits touching top file (90d) across the 6 author groups (H(5) = 528.09, p < .001, epsilon-squared = 0.020)."
 
 ------------------------------------------------------------------------------
  Inferential test — post-merge commits touching top file (90d): OpenAI Codex vs Human
 ------------------------------------------------------------------------------
  Test          : Mann-Whitney U (two-sided)
- Sample sizes  : n(OpenAI Codex) = 17,440, n(Human) = 2,859
- Statistic     : U = 26,727,524.0
+ Sample sizes  : n(OpenAI Codex) = 17,441, n(Human) = 2,859
+ Statistic     : U = 26,716,409.0
  p (raw)       : p < .001
  p (BH-adj.)   : p < .001
- Effect size   : Cliff's delta = 0.072, 95% CI [0.051, 0.094] (negligible)
+ Effect size   : Cliff's delta = 0.072, 95% CI [0.049, 0.094] (negligible)
  Rank-biserial : r = 0.072
  
  READY-TO-PASTE (IEEE prose):
- "OpenAI Codex PRs showed higher post-merge commits touching top file (90d) than Human PRs (Mann-Whitney U = 26,727,524.0, BH-adjusted p < .001, Cliff's delta = 0.07, 95% CI [0.051, 0.094]), a negligible effect."
+ "OpenAI Codex PRs showed higher post-merge commits touching top file (90d) than Human PRs (Mann-Whitney U = 26,716,409.0, BH-adjusted p < .001, Cliff's delta = 0.07, 95% CI [0.049, 0.094]), a negligible effect."
 
 ------------------------------------------------------------------------------
  Inferential test — post-merge commits touching top file (90d): Devin vs Human
 ------------------------------------------------------------------------------
  Test          : Mann-Whitney U (two-sided)
  Sample sizes  : n(Devin) = 2,138, n(Human) = 2,859
- Statistic     : U = 2,937,006.0
+ Statistic     : U = 2,936,906.5
  p (raw)       : p = .017
  p (BH-adj.)   : p = .021
- Effect size   : Cliff's delta = -0.039, 95% CI [-0.070, -0.007] (negligible)
+ Effect size   : Cliff's delta = -0.039, 95% CI [-0.071, -0.007] (negligible)
  Rank-biserial : r = -0.039
  
  READY-TO-PASTE (IEEE prose):
- "Devin PRs showed lower post-merge commits touching top file (90d) than Human PRs (Mann-Whitney U = 2,937,006.0, BH-adjusted p = .021, Cliff's delta = -0.04, 95% CI [-0.070, -0.007]), a negligible effect."
+ "Devin PRs showed lower post-merge commits touching top file (90d) than Human PRs (Mann-Whitney U = 2,936,906.5, BH-adjusted p = .021, Cliff's delta = -0.04, 95% CI [-0.071, -0.007]), a negligible effect."
 
 ------------------------------------------------------------------------------
  Inferential test — post-merge commits touching top file (90d): GitHub Copilot vs Human
 ------------------------------------------------------------------------------
  Test          : Mann-Whitney U (two-sided)
  Sample sizes  : n(GitHub Copilot) = 2,051, n(Human) = 2,859
- Statistic     : U = 2,261,392.0
+ Statistic     : U = 2,260,150.5
  p (raw)       : p < .001
  p (BH-adj.)   : p < .001
- Effect size   : Cliff's delta = -0.229, 95% CI [-0.260, -0.197] (small)
+ Effect size   : Cliff's delta = -0.229, 95% CI [-0.260, -0.198] (small)
  Rank-biserial : r = -0.229
  
  READY-TO-PASTE (IEEE prose):
- "GitHub Copilot PRs showed lower post-merge commits touching top file (90d) than Human PRs (Mann-Whitney U = 2,261,392.0, BH-adjusted p < .001, Cliff's delta = -0.23, 95% CI [-0.260, -0.197]), a small effect."
+ "GitHub Copilot PRs showed lower post-merge commits touching top file (90d) than Human PRs (Mann-Whitney U = 2,260,150.5, BH-adjusted p < .001, Cliff's delta = -0.23, 95% CI [-0.260, -0.198]), a small effect."
 
 ------------------------------------------------------------------------------
  Inferential test — post-merge commits touching top file (90d): Cursor vs Human
 ------------------------------------------------------------------------------
  Test          : Mann-Whitney U (two-sided)
  Sample sizes  : n(Cursor) = 913, n(Human) = 2,859
- Statistic     : U = 1,233,052.0
+ Statistic     : U = 1,233,040.5
  p (raw)       : p = .011
  p (BH-adj.)   : p = .019
- Effect size   : Cliff's delta = -0.055, 95% CI [-0.096, -0.015] (negligible)
+ Effect size   : Cliff's delta = -0.055, 95% CI [-0.097, -0.014] (negligible)
  Rank-biserial : r = -0.055
  
  READY-TO-PASTE (IEEE prose):
- "Cursor PRs showed lower post-merge commits touching top file (90d) than Human PRs (Mann-Whitney U = 1,233,052.0, BH-adjusted p = .019, Cliff's delta = -0.06, 95% CI [-0.096, -0.015]), a negligible effect."
+ "Cursor PRs showed lower post-merge commits touching top file (90d) than Human PRs (Mann-Whitney U = 1,233,040.5, BH-adjusted p = .019, Cliff's delta = -0.06, 95% CI [-0.097, -0.014]), a negligible effect."
 
 ------------------------------------------------------------------------------
  Inferential test — post-merge commits touching top file (90d): Claude Code vs Human
 ------------------------------------------------------------------------------
  Test          : Mann-Whitney U (two-sided)
  Sample sizes  : n(Claude Code) = 256, n(Human) = 2,859
- Statistic     : U = 335,334.0
+ Statistic     : U = 335,337.5
  p (raw)       : p = .025
  p (BH-adj.)   : p = .025
- Effect size   : Cliff's delta = -0.084, 95% CI [-0.150, -0.015] (negligible)
+ Effect size   : Cliff's delta = -0.084, 95% CI [-0.151, -0.014] (negligible)
  Rank-biserial : r = -0.084
  
  READY-TO-PASTE (IEEE prose):
- "Claude Code PRs showed lower post-merge commits touching top file (90d) than Human PRs (Mann-Whitney U = 335,334.0, BH-adjusted p = .025, Cliff's delta = -0.08, 95% CI [-0.150, -0.015]), a negligible effect."
+ "Claude Code PRs showed lower post-merge commits touching top file (90d) than Human PRs (Mann-Whitney U = 335,337.5, BH-adjusted p = .025, Cliff's delta = -0.08, 95% CI [-0.151, -0.014]), a negligible effect."
 
 ------------------------------------------------------------------------------
  Descriptive statistics — post-merge commits per 100 changed lines
 ------------------------------------------------------------------------------
  Group                  n       Mean         SD     Median        Q1        Q3
  -----------------------------------------------------------------------------
- OpenAI Codex      17,432    126.777    599.931      4.944     0.178    38.617
- Devin              2,126     60.514    211.784      3.226     0.254    27.508
- GitHub Copilot     2,050     42.279    234.962      0.909     0.000    10.000
- Cursor               912     80.219    479.027      2.259     0.077    21.429
- Claude Code          256     43.072    241.710      0.372     0.038     2.289
- Human              2,853     97.531    346.721      3.846     0.125    40.000
+ OpenAI Codex      17,433    126.792    599.922      4.950     0.179    38.636
+ Devin              2,126     60.574    211.816      3.278     0.258    27.508
+ GitHub Copilot     2,050     42.293    234.962      0.924     0.000    10.000
+ Cursor               912     80.233    479.033      2.259     0.082    21.429
+ Claude Code          256     43.137    241.705      0.372     0.038     2.289
+ Human              2,853     97.546    346.718      3.846     0.127    40.000
 
 ------------------------------------------------------------------------------
  Omnibus test — post-merge commits per 100 changed lines across 6 groups
 ------------------------------------------------------------------------------
  Test          : Kruskal-Wallis H
  Groups (k)    : 6  (OpenAI Codex, Devin, GitHub Copilot, Cursor, Claude Code, Human)
- Total n       : 25,629
- Statistic     : H(5) = 370.32
+ Total n       : 25,630
+ Statistic     : H(5) = 368.83
  p             : p < .001
- Effect size   : epsilon-squared = 0.0143
+ Effect size   : epsilon-squared = 0.0142
  
  READY-TO-PASTE (IEEE prose):
- "A Kruskal-Wallis test indicated a significant difference in post-merge commits per 100 changed lines across the 6 author groups (H(5) = 370.32, p < .001, epsilon-squared = 0.014)."
+ "A Kruskal-Wallis test indicated a significant difference in post-merge commits per 100 changed lines across the 6 author groups (H(5) = 368.83, p < .001, epsilon-squared = 0.014)."
 
 ------------------------------------------------------------------------------
  Inferential test — post-merge commits per 100 changed lines: OpenAI Codex vs Human
 ------------------------------------------------------------------------------
  Test          : Mann-Whitney U (two-sided)
- Sample sizes  : n(OpenAI Codex) = 17,432, n(Human) = 2,853
- Statistic     : U = 25,371,501.0
- p (raw)       : p = .080
- p (BH-adj.)   : p = .100
- Effect size   : Cliff's delta = 0.020, 95% CI [-0.003, 0.043] (negligible)
+ Sample sizes  : n(OpenAI Codex) = 17,433, n(Human) = 2,853
+ Statistic     : U = 25,358,497.5
+ p (raw)       : p = .089
+ p (BH-adj.)   : p = .111
+ Effect size   : Cliff's delta = 0.020, 95% CI [-0.003, 0.042] (negligible)
  Rank-biserial : r = 0.020
  
  READY-TO-PASTE (IEEE prose):
- "OpenAI Codex PRs showed higher post-merge commits per 100 changed lines than Human PRs (Mann-Whitney U = 25,371,501.0, BH-adjusted p = .100, Cliff's delta = 0.02, 95% CI [-0.003, 0.043]), a negligible effect."
+ "OpenAI Codex PRs showed higher post-merge commits per 100 changed lines than Human PRs (Mann-Whitney U = 25,358,497.5, BH-adjusted p = .111, Cliff's delta = 0.02, 95% CI [-0.003, 0.042]), a negligible effect."
 
 ------------------------------------------------------------------------------
  Inferential test — post-merge commits per 100 changed lines: Devin vs Human
 ------------------------------------------------------------------------------
  Test          : Mann-Whitney U (two-sided)
  Sample sizes  : n(Devin) = 2,126, n(Human) = 2,853
- Statistic     : U = 2,973,047.0
- p (raw)       : p = .232
- p (BH-adj.)   : p = .232
- Effect size   : Cliff's delta = -0.020, 95% CI [-0.052, 0.012] (negligible)
- Rank-biserial : r = -0.020
+ Statistic     : U = 2,973,931.0
+ p (raw)       : p = .239
+ p (BH-adj.)   : p = .239
+ Effect size   : Cliff's delta = -0.019, 95% CI [-0.052, 0.012] (negligible)
+ Rank-biserial : r = -0.019
  
  READY-TO-PASTE (IEEE prose):
- "Devin PRs showed lower post-merge commits per 100 changed lines than Human PRs (Mann-Whitney U = 2,973,047.0, BH-adjusted p = .232, Cliff's delta = -0.02, 95% CI [-0.052, 0.012]), a negligible effect."
+ "Devin PRs showed lower post-merge commits per 100 changed lines than Human PRs (Mann-Whitney U = 2,973,931.0, BH-adjusted p = .239, Cliff's delta = -0.02, 95% CI [-0.052, 0.012]), a negligible effect."
 
 ------------------------------------------------------------------------------
  Inferential test — post-merge commits per 100 changed lines: GitHub Copilot vs Human
 ------------------------------------------------------------------------------
  Test          : Mann-Whitney U (two-sided)
  Sample sizes  : n(GitHub Copilot) = 2,050, n(Human) = 2,853
- Statistic     : U = 2,324,184.0
+ Statistic     : U = 2,323,697.0
  p (raw)       : p < .001
  p (BH-adj.)   : p < .001
- Effect size   : Cliff's delta = -0.205, 95% CI [-0.236, -0.175] (small)
+ Effect size   : Cliff's delta = -0.205, 95% CI [-0.237, -0.174] (small)
  Rank-biserial : r = -0.205
  
  READY-TO-PASTE (IEEE prose):
- "GitHub Copilot PRs showed lower post-merge commits per 100 changed lines than Human PRs (Mann-Whitney U = 2,324,184.0, BH-adjusted p < .001, Cliff's delta = -0.21, 95% CI [-0.236, -0.175]), a small effect."
+ "GitHub Copilot PRs showed lower post-merge commits per 100 changed lines than Human PRs (Mann-Whitney U = 2,323,697.0, BH-adjusted p < .001, Cliff's delta = -0.21, 95% CI [-0.237, -0.174]), a small effect."
 
 ------------------------------------------------------------------------------
  Inferential test — post-merge commits per 100 changed lines: Cursor vs Human
 ------------------------------------------------------------------------------
  Test          : Mann-Whitney U (two-sided)
  Sample sizes  : n(Cursor) = 912, n(Human) = 2,853
- Statistic     : U = 1,200,404.5
+ Statistic     : U = 1,200,121.5
  p (raw)       : p < .001
  p (BH-adj.)   : p < .001
- Effect size   : Cliff's delta = -0.077, 95% CI [-0.119, -0.036] (negligible)
- Rank-biserial : r = -0.077
+ Effect size   : Cliff's delta = -0.078, 95% CI [-0.119, -0.035] (negligible)
+ Rank-biserial : r = -0.078
  
  READY-TO-PASTE (IEEE prose):
- "Cursor PRs showed lower post-merge commits per 100 changed lines than Human PRs (Mann-Whitney U = 1,200,404.5, BH-adjusted p < .001, Cliff's delta = -0.08, 95% CI [-0.119, -0.036]), a negligible effect."
+ "Cursor PRs showed lower post-merge commits per 100 changed lines than Human PRs (Mann-Whitney U = 1,200,121.5, BH-adjusted p < .001, Cliff's delta = -0.08, 95% CI [-0.119, -0.035]), a negligible effect."
 
 ------------------------------------------------------------------------------
  Inferential test — post-merge commits per 100 changed lines: Claude Code vs Human
 ------------------------------------------------------------------------------
  Test          : Mann-Whitney U (two-sided)
  Sample sizes  : n(Claude Code) = 256, n(Human) = 2,853
- Statistic     : U = 263,310.0
+ Statistic     : U = 263,091.0
  p (raw)       : p < .001
  p (BH-adj.)   : p < .001
- Effect size   : Cliff's delta = -0.279, 95% CI [-0.338, -0.217] (small)
- Rank-biserial : r = -0.279
+ Effect size   : Cliff's delta = -0.280, 95% CI [-0.338, -0.218] (small)
+ Rank-biserial : r = -0.280
  
  READY-TO-PASTE (IEEE prose):
- "Claude Code PRs showed lower post-merge commits per 100 changed lines than Human PRs (Mann-Whitney U = 263,310.0, BH-adjusted p < .001, Cliff's delta = -0.28, 95% CI [-0.338, -0.217]), a small effect."
+ "Claude Code PRs showed lower post-merge commits per 100 changed lines than Human PRs (Mann-Whitney U = 263,091.0, BH-adjusted p < .001, Cliff's delta = -0.28, 95% CI [-0.338, -0.218]), a small effect."
 
 ------------------------------------------------------------------------------
  Revert rates — each agent vs Human (2x2, BH-adjusted)
@@ -207,11 +207,11 @@
  Revert-rate comparisons (OR < 1 = agent reverted LESS than human)
 ------------------------------------------------------------------------------
           agent  n_agent revert_rate_agent revert_rate_human       test    chi2  p_raw odds_ratio or_ci_low or_ci_high  p_adj
-   OpenAI Codex    17440            0.0443            0.0682 Chi-square 30.3265 0.0000     0.6336    0.5387     0.7453 0.0000
-          Devin     2138            0.1006            0.0682 Chi-square 16.5758 0.0000     1.5274    1.2474     1.8703 0.0001
- GitHub Copilot     2051            0.0522            0.0682 Chi-square  5.0461 0.0247     0.7519    0.5898     0.9587 0.0411
-         Cursor      913            0.0876            0.0682 Chi-square  3.5783 0.0585     1.3120    1.0000     1.7215 0.0732
-    Claude Code      256            0.0391            0.0682 Chi-square  2.7892 0.0949     0.5553    0.2903     1.0625 0.0949
+   OpenAI Codex    17441            0.0446            0.0675 Chi-square 27.9467 0.0000     0.6441    0.5473     0.7580 0.0000
+          Devin     2138            0.1024            0.0675 Chi-square 19.2650 0.0000     1.5764    1.2878     1.9297 0.0000
+ GitHub Copilot     2051            0.0522            0.0675 Chi-square  4.6328 0.0314     0.7603    0.5961     0.9698 0.0473
+         Cursor      913            0.0887            0.0675 Chi-square  4.3128 0.0378     1.3448    1.0257     1.7633 0.0473
+    Claude Code      256            0.0430            0.0675 Chi-square  1.9280 0.1650     0.6202    0.3331     1.1546 0.1650
 
 ------------------------------------------------------------------------------
  Assumption checks & test justification
