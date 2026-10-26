@@ -48,6 +48,9 @@ if TOKEN:
 
 FOLLOWUP_DAYS = 90          # window for post-merge maintenance signals
 REVERT_RE = re.compile(r"\brevert(s|ed|ing)?\b", re.IGNORECASE)
+# a revert commit proper: "Revert ...", "Reverts owner/repo#N", or git's "This reverts commit"
+REVERT_COMMIT_RE = re.compile(r"^\s*Revert\b|^\s*Reverts\s+\S+#\d+|This reverts commit",
+                              re.IGNORECASE | re.MULTILINE)
 CHECKPOINT_EVERY = 200      # write partial CSV every N PRs
 
 
@@ -127,7 +130,7 @@ def enrich_pr(row: pd.Series) -> dict:
         "n_files": None, "additions": None, "deletions": None,
         "changed_files_list": None, "languages_touched": None,
         "post_merge_commits_90d": None, "post_merge_authors_90d": None,
-        "revert_detected": None,
+        "revert_detected": None, "revert_commit": None, "revert_of_pr": None,
     }
     if repo is None:
         out["enrich_status"] = "bad_url"
@@ -165,10 +168,19 @@ def enrich_pr(row: pd.Series) -> dict:
                     "since": merged_dt.isoformat(),
                     "until": until.isoformat(),
                     "per_page": config.GITHUB_PER_PAGE}) or []
-        # exclude the merge commit itself (same timestamp)
-        later = [c for c in commits
-                 if c.get("commit", {}).get("author", {}).get("date", "")
-                 > merged_dt.isoformat()]
+        # keep commits strictly after the merge and drop the PR's own commits.
+        # v1.0.0 compared the timestamps as text ("...Z" vs "...+00:00"), which kept
+        # the PR's own squash or merge commit; parse them instead (fixed in v1.1.0).
+        own_tag = f"#{number}"
+
+        def authored(c):
+            return pd.to_datetime(c.get("commit", {}).get("author", {}).get("date"),
+                                  utc=True, errors="coerce")
+
+        after = [c for c in commits
+                 if pd.notna(authored(c)) and authored(c) > merged_dt]
+        later = [c for c in after
+                 if own_tag not in c.get("commit", {}).get("message", "")]
         out["post_merge_commits_90d"] = len(later)
         out["post_merge_authors_90d"] = len({
             (c.get("author") or {}).get("login")
@@ -177,6 +189,13 @@ def enrich_pr(row: pd.Series) -> dict:
         out["revert_detected"] = int(any(
             REVERT_RE.search(c.get("commit", {}).get("message", ""))
             for c in later))
+        out["revert_commit"] = int(any(
+            REVERT_COMMIT_RE.search(c.get("commit", {}).get("message", ""))
+            for c in later))
+        title = str(row.get("title") or "").strip().lower()
+        out["revert_of_pr"] = int(any(
+            REVERT_COMMIT_RE.search(m) and (own_tag in m or (len(title) > 12 and title[:60] in m.lower()))
+            for m in (c.get("commit", {}).get("message", "") for c in after)))
     return out
 
 
