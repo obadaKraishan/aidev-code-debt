@@ -103,7 +103,7 @@ def check_secrets():
         from dotenv import load_dotenv
         loaded = load_dotenv(env_path)
         log(f"  {PASS if loaded else WARN} .env file "
-            f"{'loaded from ' + str(env_path) if loaded else 'not found at ' + str(env_path)}")
+            f"{'loaded from <project root>/.env' if loaded else 'not found at <project root>/.env'}")
         if not loaded:
             warnings_.append("Copy .env.example to .env and fill in tokens")
     except ImportError:
@@ -113,14 +113,14 @@ def check_secrets():
 
     gh = os.getenv("GITHUB_TOKEN", "")
     if gh:
-        log(f"  {PASS} GITHUB_TOKEN present (…{gh[-4:]}, {len(gh)} chars)")
+        log(f"  {PASS} GITHUB_TOKEN present ({len(gh)} chars)")
     else:
         log(f"  {FAIL} GITHUB_TOKEN missing — enrichment (5,000 req/h) needs it")
         failures.append("Set GITHUB_TOKEN in .env")
 
     hf = os.getenv("HF_TOKEN", "")
     if hf:
-        log(f"  {PASS} HF_TOKEN present (…{hf[-4:]})")
+        log(f"  {PASS} HF_TOKEN present")
     else:
         log(f"  {WARN} HF_TOKEN missing — fine if the dataset is public")
         warnings_.append("HF_TOKEN empty (only needed for gated datasets)")

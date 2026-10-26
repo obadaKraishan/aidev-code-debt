@@ -87,7 +87,7 @@ def within_repo(d, outcome, agent):
             "mh_or": float(mh.oddsratio_pooled)}
 
 
-def revert_block(d, outcome, label):
+def revert_block(d, outcome, label, fe=True):
     """Raw OR (chi-square, BH), clustered adjusted OR, and within-repository OR for one revert definition."""
     say(f"  {label}")
     say(f"  {'group':<15s} {'n':>6s} {'rate':>7s}  {'raw OR':<28s} {'adjusted OR (clustered)':<28s} within-repository OR")
@@ -101,17 +101,23 @@ def revert_block(d, outcome, label):
     padj = st.adjust_pvalues([r[3]["p"] for r in raw])
     terms = [f"C(author_group, Treatment('{H}'))[T.{a}]" for a in config.AGENTS]
     adj = clustered_logit(f"{outcome} ~ C(author_group, Treatment('{H}')) + logsize", d, terms + ["logsize"])
-    wr = [within_repo(d, outcome, a) for a in config.AGENTS]
-    wr_padj = st.adjust_pvalues([w["fe_p"] for w in wr])
+    if fe:
+        wr = [within_repo(d, outcome, a) for a in config.AGENTS]
+        wr_padj = st.adjust_pvalues([w["fe_p"] for w in wr])
+    else:  # too sparse for a within-repository model
+        wr = [None] * len(config.AGENTS)
+        wr_padj = [None] * len(config.AGENTS)
     rows = []
     for (a, n, rate, cs), pa, t, w, wpa in zip(raw, padj, terms, wr, wr_padj):
         o = adj[t]
+        wtxt = ("n/a (too sparse)" if w is None else
+                f"{fmt_or(w['fe_or'], w['fe_lo'], w['fe_hi'], w['fe_p'])} (BH {st.format_p(wpa)}; "
+                f"{w['shared_repos']} shared repos, agent {w['rate_agent']:.1%} vs human {w['rate_human']:.1%})")
         say(f"  {a:<15s} {n:>6,d} {rate:>6.1%}  {fmt_or(cs['odds_ratio'], cs['or_ci_low'], cs['or_ci_high'], pa):<28s} "
-            f"{fmt_or(*o):<28s} {fmt_or(w['fe_or'], w['fe_lo'], w['fe_hi'], w['fe_p'])} (BH {st.format_p(wpa)}; "
-            f"{w['shared_repos']} shared repos, agent {w['rate_agent']:.1%} vs human {w['rate_human']:.1%})")
+            f"{fmt_or(*o):<28s} {wtxt}")
         rows.append({"agent": a, "n": n, "rate": float(rate), "raw_or": cs["odds_ratio"], "raw_lo": cs["or_ci_low"],
                      "raw_hi": cs["or_ci_high"], "raw_p_adj": pa, "adj_or": o[0], "adj_lo": o[1], "adj_hi": o[2],
-                     "adj_p": o[3], **{f"wr_{k}": v for k, v in w.items() if k != "agent"}, "wr_p_adj": wpa})
+                     "adj_p": o[3], **({f"wr_{k}": v for k, v in w.items() if k != "agent"} if w else {}), "wr_p_adj": wpa})
     say(f"  {'Human':<15s} {len(h):>6,d} {h[outcome].mean():>6.1%}")
     say(f"  size: OR per log unit {fmt_or(*adj['logsize'])}")
     say("")
@@ -194,7 +200,7 @@ def main():
                            ("revert_of_this_pr", "revert of this PR")]:
             d[col] = d[col].astype(int)
             try:
-                RESULTS[f"rq3_corrected_{col}"] = revert_block(d, col, label)
+                RESULTS[f"rq3_corrected_{col}"] = revert_block(d, col, label, fe=(col != "revert_of_this_pr"))
             except Exception as e:  # sparse outcomes can defeat the fixed-effects fit
                 say(f"  {label}: model not estimable ({e})")
                 say(d.groupby("author_group")[col].agg(["sum", "mean"]).to_string())

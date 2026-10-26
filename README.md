@@ -79,6 +79,8 @@ python run_all.py               # or --skip-enrich to reuse an existing cache
 - **`analysis/robustness/`** adds the size-adjusted, repository-clustered logistic models quoted in the paper (RQ1,
   RQ3, RQ4), within-repository comparisons (conditional logit and Mantel-Haenszel), concentration checks, and the
   script for Fig. 3.
+- `setup/setup_environment.py` no longer prints the local `.env` path or any characters of a token; the shipped
+  `setup/environment_report.txt` is redacted to match.
 - Notes on shipped reports: `data/interim/enrichment_report.txt` describes every PR submitted to enrichment before the
   human baseline was matched (a superset of the paper's corpus); the paper's counts come from `master.csv`.
   AIDev's human PR sample comes from repositories with more than 500 stars.
