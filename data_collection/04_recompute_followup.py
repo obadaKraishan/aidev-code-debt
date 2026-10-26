@@ -20,9 +20,11 @@
                 100 (the REST endpoint returned one page of 100);
              4. ORIGINAL measures (author date >= merge second, any
                 "revert" word), reproduced to validate the method, and
-                CORRECTED ones: strictly after merge with the PR's own
-                commits excluded, and three revert definitions (any
-                "revert" word; a revert commit; a revert of this PR).
+                CORRECTED ones: strictly after merge, excluding the PR's own
+                commits (its landing commits and any non-revert commit that
+                names the PR), and three revert definitions (any "revert"
+                word; a revert commit, i.e. a subject starting "Revert" or
+                git's "This reverts commit"; a revert of this PR).
  Input   : data/processed/master.csv
  Output  : data/interim/followup_recomputed.csv (one row per merged PR)
            data/interim/followup_recompute/ (resumable progress files)
@@ -47,7 +49,12 @@ OUT_CSV = config.DATA_INTERIM / "followup_recomputed.csv"
 FOLLOWUP_DAYS = 90
 
 ANY_REVERT = re.compile(r"\brevert(s|ed|ing)?\b", re.IGNORECASE)
-REVERT_FORMAT = re.compile(r"^\s*Revert\b|^\s*Reverts\s+\S+#\d+|This reverts commit", re.IGNORECASE | re.MULTILINE)
+REVERT_SUBJECT = re.compile(r"^\s*Revert\b", re.IGNORECASE)
+
+def is_revert(msg):
+    """A revert commit: the subject line starts with "Revert", or git's "This reverts commit" appears."""
+    subject = msg.strip().split("\n", 1)[0] if msg else ""
+    return bool(REVERT_SUBJECT.match(subject)) or "This reverts commit" in (msg or "")
 SINCE = '2024-11-01'
 
 def git(args, cwd, timeout=900, check=True):
@@ -246,19 +253,22 @@ def process(repo, prs):
                 else:
                     hist = history(d, top, md.isoformat(), until.isoformat())
                 row['bulk'] = int(bulk_ok)
-                tag = f'#{int(x.number)}'
-                old = [h for h in hist if h[1] >= md.floor('s')]
-                new = [h for h in hist if h[1] > md and h[0] not in own and tag not in h[2]]
-                after = [h for h in hist if h[1] > md and h[0] not in own]
+                tag = re.compile(rf'#{int(x.number)}\b')
                 title = str(x.title).strip().lower() if isinstance(x.title, str) else ''
+                old = [h for h in hist if h[1] >= md.floor('s')]
+                after = [h for h in hist if h[1] > md and h[0] not in own]
+                # the PR's own commits: its landing commits, and any non-revert commit that names the PR
+                new = [h for h in after if is_revert(h[2]) or not tag.search(h[2])]
                 row.update({
                     'status': 'ok', 'top_file': top, 'n_hist': len(hist),
                     'old_count': len(old), 'old_revert': int(any(ANY_REVERT.search(h[2]) for h in old)),
                     'new_count': len(new),
                     'revert_any_word': int(any(ANY_REVERT.search(h[2]) for h in new)),
-                    'revert_format': int(any(REVERT_FORMAT.search(h[2]) for h in new)),
-                    'revert_of_this_pr': int(any(REVERT_FORMAT.search(h[2]) and (tag in h[2] or (len(title) > 12 and title[:60] in h[2].lower())) for h in after)),
-                    'own_in_old': int(any(h[0] in own or tag in h[2] for h in old)),
+                    'revert_format': int(any(is_revert(h[2]) for h in new)),
+                    'revert_of_this_pr': int(any(is_revert(h[2]) and (tag.search(h[2]) or (len(title) > 12 and title[:60] in h[2].lower())) for h in new)),
+                    'own_in_old': int(any(h[0] in own or (tag.search(h[2]) and not is_revert(h[2])) for h in old)),
+                    'hist': [[h[0][:12], int(h[1].timestamp()), h[2].strip().split('\n', 1)[0][:100], int(is_revert(h[2])),
+                              int(bool(tag.search(h[2]))), int(h[0] in own)] for h in hist],
                 })
             except Exception as e:  # keep going on any single-PR failure
                 row['status'] = 'error'; row['err'] = str(e)[:300]
