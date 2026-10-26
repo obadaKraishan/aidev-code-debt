@@ -21,21 +21,22 @@ with 58,792 cached GitHub REST API responses.
 | Folder               | Contents                                                                                                                                                                                                                                           |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `setup/`           | `config.py`, the single source of truth: agent labels, human-baseline matching rules, languages, diff-size limits, CWE smell catalog, statistical settings. `setup_environment.py` checks the environment before any collection.               |
-| `data_collection/` | AIDev download, matched human baseline, GitHub enrichment (cached, resumable, 90-day follow-up on the most-changed file).                                                                                                                          |
+| `data_collection/` | AIDev download, matched human baseline, GitHub enrichment (cached, resumable), and `04_recompute_followup.py`, which rebuilds the 90-day post-merge measures from each repository's git history (v1.1.0).                                        |
 | `data_processing/` | Clean and merge, patch-level static analysis, feature engineering into `master.csv`.                                                                                                                                                             |
 | `data_validation/` | Quality gate: schema, ranges, group coverage. Exits non-zero on failure.                                                                                                                                                                           |
-| `codebook/`        | Generated variable dictionary for all 63 columns of `master.csv`.                                                                                                                                                                                |
+| `codebook/`        | Generated variable dictionary for all 64 columns of `master.csv`.                                                                                                                                                                                |
 | `analysis/rq*/`    | One self-contained folder per research question. Each writes `rqN_results.csv`, `rqN_results.json`, a statistical report with sample sizes, test statistics, raw and BH-adjusted p-values, effect sizes with bootstrap intervals, and figures. |
 | `data/`            | `interim/` (enriched and merged PR tables, static metrics, human baseline) and `processed/` (`master.csv` and reports).                                                                                                                      |
 | `utils/`           | I/O helpers, the statistics engine (Mann-Whitney with Cliff's delta, Kruskal-Wallis with epsilon-squared and Dunn, chi-square and Fisher with odds ratios, bootstrap), and the report builder.                                                     |
 
-| Paper RQ                                | Folder                                   |
-| --------------------------------------- | ---------------------------------------- |
-| RQ1 Defect-prone patterns in added code | `analysis/rq1_defect_density/`         |
-| RQ2 Maintainability across agents       | `analysis/rq2_maintainability/`        |
-| RQ3 Post-merge maintenance overhead     | `analysis/rq3_maintenance_overhead/`   |
-| RQ4 Vulnerability classes               | `analysis/rq4_cwe_overrepresentation/` |
-| RQ5 Human review behavior               | `analysis/rq5_review_dynamics/`        |
+| Paper RQ                                                                 | Folder                                   |
+| ------------------------------------------------------------------------ | ---------------------------------------- |
+| RQ1 Defect-prone patterns in added code                                  | `analysis/rq1_defect_density/`         |
+| RQ2 Maintainability across agents                                        | `analysis/rq2_maintainability/`        |
+| RQ3 Post-merge maintenance overhead                                      | `analysis/rq3_maintenance_overhead/`   |
+| RQ4 Vulnerability classes                                                | `analysis/rq4_cwe_overrepresentation/` |
+| RQ5 Human review behavior                                                | `analysis/rq5_review_dynamics/`        |
+| Size-adjusted and within-repository models, concentration checks, Fig. 3 | `analysis/robustness/`                 |
 
 ## Reproduce the results from the shipped tables
 
